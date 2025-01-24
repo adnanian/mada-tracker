@@ -51,6 +51,13 @@ export default function Calculator({ selectedPlayer, onUpdate }) {
                 }
                 break;
         }
+        if (newPosition % 100 === 0) {
+            if (newPosition === 0) {
+                // TODO
+            } else {
+                // TODO
+            }
+        }
         onUpdate(newPosition);
     }
 
