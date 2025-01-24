@@ -13,7 +13,7 @@ import { MadaContext } from '../context';
 import { useState, useContext } from 'react';
 
 export default function Calculator({ selectedPlayer, onUpdate }) {
-    const { lowerBound, setLowerBound, upperBound, setUpperBound } = useContext(MadaContext);
+    const { lowerBound, upperBound } = useContext(MadaContext);
     const [number, setNumber] = useState('');
     const [operand, setOperand] = useState('');
     const [applySameColorRule, setApplySameColorRule] = useState(false);
@@ -29,6 +29,7 @@ export default function Calculator({ selectedPlayer, onUpdate }) {
 
     function calculate() {
         let newPosition = 0;
+        let triggerRangeOpen = false;
         switch (operand) {
             case '+':
                 newPosition = selectedPlayer.position + number;
@@ -38,7 +39,7 @@ export default function Calculator({ selectedPlayer, onUpdate }) {
                 break;
             case '×':
                 newPosition = selectedPlayer.position * number;
-                if (number === 1 && applySameColorRule) {
+                if (number === 1 && applySameColorRule && lowerBound < 0 && upperBound > 0) {
                     newPosition *= -1;
                 }
                 break;
@@ -52,13 +53,14 @@ export default function Calculator({ selectedPlayer, onUpdate }) {
                 break;
         }
         if (newPosition % 100 === 0) {
-            if (newPosition === 0) {
-                // TODO
-            } else {
-                // TODO
-            }
+            triggerRangeOpen = true;
+            // if (newPosition === 0) {
+            //     // TODO
+            // } else {
+            //     // TODO
+            // }
         }
-        onUpdate(newPosition);
+        onUpdate(newPosition, triggerRangeOpen);
     }
 
     function handleButtonClick(e) {

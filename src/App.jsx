@@ -6,16 +6,18 @@ import Button from '@mui/material/Button';
 import { MadaProvider } from './context';
 import Range from './components/Range';
 import { INITIAL_POSITION, MIN_PLAYER_SIZE } from './constants';
-import PlayerSizeAdjuster from './components/PlayerSizeAdjuster';
+import PlayerSizeAdjustor from './components/PlayerSizeAdjustor';
 import { useEffect, useState } from 'react';
 import PlayerCard from './components/PlayerCard';
 import ModeSwitch from './components/ModeSwitch';
 import Calculator from './components/Calculator';
+import RangeAdjustor from './components/RangeAdjustor';
 
 function App() {
   const [playerSize, setPlayerSize] = useState(MIN_PLAYER_SIZE);
   const [playerInfo, setPlayerInfo] = useState([]);
   const [selectedPlayer, setSelectedPlayer] = useState(null);
+  const [triggerRangeChange, setTriggerRangeChange] = useState(false);
 
   useEffect(() => {
     setPlayerInfo(
@@ -44,9 +46,14 @@ function App() {
     setSelectedPlayer(newSelectedPlayer);
   }
 
-  function updateSelectedPlayerPosition(newPosition) {
+  function updateSelectedPlayerPosition(newPosition, openRangeAdjustor) {
     setPlayerInfo(playerInfo.map((player) => player.number === selectedPlayer.number ? { ...player, position: newPosition } : player));
     setSelectedPlayer({ ...selectedPlayer, position: newPosition });
+    setTriggerRangeChange(openRangeAdjustor);
+  }
+
+  function hideRangeAdjustor() {
+    setTriggerRangeChange(false);
   }
 
   const playerCards = playerInfo.map((player) => {
@@ -72,7 +79,6 @@ function App() {
     );
   });
 
-
   return (
     <MadaProvider>
       <Paper elevation={24} sx={{
@@ -89,7 +95,7 @@ function App() {
           borderRadius: 'inherit'
         },
       }}>
-        <Box sx={{
+        <Box disabled={triggerRangeChange} sx={{
           flexDirection: 'row',
           justifyContent: 'space-evenly',
           marginTop: '5px',
@@ -97,9 +103,10 @@ function App() {
             flexDirection: 'column'
           },
           width: '80%'
+
         }}>
           <Range />
-          <PlayerSizeAdjuster numberOfPlayers={playerSize} onChange={handlePlayerSizeChange} />
+          <PlayerSizeAdjustor numberOfPlayers={playerSize} onChange={handlePlayerSizeChange} />
           <Button
             onClick={() => handlePlayerSelection(null)}
             variant='contained'
@@ -108,6 +115,14 @@ function App() {
             Unselect
           </Button>
           <ModeSwitch />
+          {
+            !triggerRangeChange ? null : (
+              <RangeAdjustor
+                players={playerInfo}
+                onUpdate={hideRangeAdjustor}
+              />
+            )
+          }
         </Box>
         <Box sx={{
           flexDirection: 'row',
@@ -127,6 +142,7 @@ function App() {
               justifyContent: 'center', // Center the grid items
               alignItems: 'center', // Align items vertically
             }}
+            disabled={triggerRangeChange}
           >
             {playerCards}
           </Grid>
@@ -135,11 +151,12 @@ function App() {
               <Calculator
                 selectedPlayer={selectedPlayer}
                 onUpdate={updateSelectedPlayerPosition}
+                disabled={triggerRangeChange}
               />
             )
           }
-        </Box>
 
+        </Box>
       </Paper>
     </MadaProvider>
   )

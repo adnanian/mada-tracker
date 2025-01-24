@@ -3,7 +3,7 @@ import { Slider, Card, Typography } from "@mui/material";
 import { MAX_PLAYER_SIZE, MIN_PLAYER_SIZE } from "../constants";
 import { useCallback } from "react";
 
-export default function PlayerSizeAdjuster({ numberOfPlayers, onChange }) {
+export default function PlayerSizeAdjustor({ numberOfPlayers, onChange }) {
     const marks = useCallback(() => {
         const playerMarks = [];
         for (let i = MIN_PLAYER_SIZE; i <= MAX_PLAYER_SIZE; i++) {
