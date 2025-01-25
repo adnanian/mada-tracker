@@ -117,7 +117,7 @@ export default function Calculator({ selectedPlayer, onUpdate }) {
                         backgroundColor: 'silver',
                         color: 'black',
                         fontWeight: 'bold',
-                        border: '3px outset, #333',
+                        border: '3px solid, #333',
                         fontSize: '30px'
                     }}
                 >
@@ -156,10 +156,10 @@ export default function Calculator({ selectedPlayer, onUpdate }) {
                     }}
                 >
                     <Grid size={6}>
-                        <Typography component='h6'>{operand}</Typography>
+                        <Typography component='h3'>{operand}</Typography>
                     </Grid>
                     <Grid size={6}>
-                        <Typography component='h6'>{number}</Typography>
+                        <Typography component='h3'>{number}</Typography>
                     </Grid>
 
                 </Grid>
