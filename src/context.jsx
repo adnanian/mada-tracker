@@ -9,7 +9,7 @@ const MadaProvider = ({ children }) => {
     const [upperBound, setUpperBound] = useState(INITIAL_UPPER_BOUND);
     const [isCompetitionMode, setIsCompetitionMode] = useState(false);
 
-    console.log(`[${lowerBound}, ${upperBound}]`)
+    // console.log(`[${lowerBound}, ${upperBound}]`)
 
     function isInRange(position) {
         return position >= lowerBound && position <= upperBound;

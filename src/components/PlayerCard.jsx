@@ -1,16 +1,17 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { Card, TextField, TableContainer, Table, TableRow, TableCell, Box, TableBody, Tooltip } from "@mui/material";
+import { Card, Button, Typography, TableContainer, Table, TableRow, TableCell, Box, TableBody, Tooltip } from "@mui/material";
 import { MadaContext } from "../context";
 import { useContext } from "react";
 
-export default function PlayerCard({ player, isSelected, onNameChange, onSelect }) {
+export default function PlayerCard({ player, isSelected, onSelect, onScoreUpdate }) {
 
     const { isInRange, isCompetitionMode } = useContext(MadaContext);
 
-    function handleNameChange(e) {
-        e.stopPropagation(); // Prevent parent click from firing
-        onNameChange(player.number, e.target.value);
-    }
+    // function handleNameChange(e) {
+    //     e.stopPropagation(); // Prevent parent click from firing
+    //     onNameChange(player.number, e.target.value);
+    // }
 
     function handleSelectedPlayer() {
         onSelect(player);
@@ -45,11 +46,23 @@ export default function PlayerCard({ player, isSelected, onNameChange, onSelect 
                 },
             }}
         >
-            <TextField
+            <Typography
+                variant='body1'
+                component='h6'
+                sx={{
+                    typography: {
+                        textAlign: 'center'
+                    }
+                }}
+            >
+                {player.name}
+            </Typography>
+            {/* <TextField
                 value={player.name}
-                onChange={handleNameChange}
+                // onChange={handleNameChange}
                 variant="outlined"
                 fullWidth
+                readOnly
                 slotProps={{
                     input: {
                         style: { textAlign: 'center' }, // Default alignment
@@ -60,7 +73,7 @@ export default function PlayerCard({ player, isSelected, onNameChange, onSelect 
                         textAlign: { xs: 'left', sm: 'center' }, // Responsive alignment
                     },
                 }}
-            />
+            /> */}
 
             <TableContainer
                 component={Card}
@@ -92,6 +105,9 @@ export default function PlayerCard({ player, isSelected, onNameChange, onSelect 
                     </TableBody>
                 </Table>
             </TableContainer>
+            <Button variant='contained' sx={{ backgroundColor: '#0f0 !important' }} onClick={onScoreUpdate}>
+                Update Score
+            </Button>
         </Box>
     );
 }

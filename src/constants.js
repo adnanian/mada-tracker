@@ -1,5 +1,9 @@
 export const INITIAL_LOWER_BOUND = 0;
 export const INITIAL_UPPER_BOUND = 5000;
 export const MIN_PLAYER_SIZE = 2;
-export const MAX_PLAYER_SIZE = 8;
+export const MAX_PLAYER_SIZE = 6;
 export const INITIAL_POSITION = 101;
+export const NUM_ARRAY = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+export const OP_ARRAY = ['+', '-', '×', '÷'];
+export const SCORE_CHANGE_MIN = -336;
+export const SCORE_CHANGE_MAX = 336;

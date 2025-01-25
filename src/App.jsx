@@ -12,12 +12,16 @@ import PlayerCard from './components/PlayerCard';
 import ModeSwitch from './components/ModeSwitch';
 import Calculator from './components/Calculator';
 import RangeAdjustor from './components/RangeAdjustor';
+import NameForm from './components/NameForm';
+import ScoreForm from './components/ScoreForm';
 
 function App() {
   const [playerSize, setPlayerSize] = useState(MIN_PLAYER_SIZE);
   const [playerInfo, setPlayerInfo] = useState([]);
   const [selectedPlayer, setSelectedPlayer] = useState(null);
   const [triggerRangeChange, setTriggerRangeChange] = useState(false);
+  const [triggerNamesAdjust, setTriggerNamesAdjust] = useState(false);
+  const [triggerScoreChange, setTriggerScoreChange] = useState(false);
 
   useEffect(() => {
     setPlayerInfo(
@@ -52,8 +56,11 @@ function App() {
     setTriggerRangeChange(openRangeAdjustor);
   }
 
-  function hideRangeAdjustor() {
-    setTriggerRangeChange(false);
+  function updateScore(points) {
+    const newScore = selectedPlayer.score + points;
+    setPlayerInfo(playerInfo.map((player) => player.number === selectedPlayer.number ? { ...player, score: newScore } : player));
+    setSelectedPlayer({ ...selectedPlayer, score: newScore });
+    setTriggerScoreChange(false);
   }
 
   const playerCards = playerInfo.map((player) => {
@@ -72,7 +79,7 @@ function App() {
         <PlayerCard
           player={player}
           isSelected={selectedPlayer?.number === player.number}
-          onNameChange={handlePlayerNameChange}
+          onScoreUpdate={() => setTriggerScoreChange(true)}
           onSelect={handlePlayerSelection}
         />
       </Grid>
@@ -114,15 +121,14 @@ function App() {
           >
             Unselect
           </Button>
+          <Button
+            onClick={() => setTriggerNamesAdjust(true)}
+            variant='contained'
+            sx={{ marginTop: 2 }}
+          >
+            New Players
+          </Button>
           <ModeSwitch />
-          {
-            !triggerRangeChange ? null : (
-              <RangeAdjustor
-                players={playerInfo}
-                onUpdate={hideRangeAdjustor}
-              />
-            )
-          }
         </Box>
         <Box sx={{
           flexDirection: 'row',
@@ -157,6 +163,22 @@ function App() {
           }
 
         </Box>
+        <RangeAdjustor
+          players={playerInfo}
+          open={triggerRangeChange}
+          onClose={() => setTriggerRangeChange(false)}
+        />
+        <NameForm
+          players={playerInfo}
+          onNameChange={handlePlayerNameChange}
+          open={triggerNamesAdjust}
+          onClose={() => setTriggerNamesAdjust(false)}
+        />
+        <ScoreForm
+          open={triggerScoreChange}
+          onClose={() => setTriggerScoreChange(false)}
+          onUpdate={updateScore}
+        />
       </Paper>
     </MadaProvider>
   )

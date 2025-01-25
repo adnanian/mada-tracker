@@ -11,6 +11,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { MadaContext } from '../context';
 import { useState, useContext } from 'react';
+import { NUM_ARRAY, OP_ARRAY } from '../constants';
 
 export default function Calculator({ selectedPlayer, onUpdate }) {
     const { lowerBound, upperBound } = useContext(MadaContext);
@@ -28,6 +29,9 @@ export default function Calculator({ selectedPlayer, onUpdate }) {
     }
 
     function calculate() {
+        if (!(NUM_ARRAY.includes(number) && OP_ARRAY.includes(operand))) {
+            throw new Error("Invalid arguments entered.");
+        }
         let newPosition = 0;
         let triggerRangeOpen = false;
         switch (operand) {
@@ -61,27 +65,34 @@ export default function Calculator({ selectedPlayer, onUpdate }) {
             // }
         }
         onUpdate(newPosition, triggerRangeOpen);
+        setNumber('');
+        setOperand('');
     }
 
     function handleButtonClick(e) {
-        const symbol = e.target.textContent;
-        switch (symbol) {
-            case '+':
-            case '-':
-            case '×':
-            case '÷':
-                setOperand(symbol);
-                break;
-            case '=':
-                calculate();
-                break;
-            case 'C':
-                clear();
-                break;
-            default:
-                setNumber(Number.parseInt(symbol));
-                break;
+        try {
+            const symbol = e.target.textContent;
+            switch (symbol) {
+                case '+':
+                case '-':
+                case '×':
+                case '÷':
+                    setOperand(symbol);
+                    break;
+                case '=':
+                    calculate();
+                    break;
+                case 'C':
+                    clear();
+                    break;
+                default:
+                    setNumber(Number.parseInt(symbol));
+                    break;
+            }
+        } catch (error) {
+            alert(error);
         }
+
     }
 
     function openCheckBox() {
@@ -101,8 +112,8 @@ export default function Calculator({ selectedPlayer, onUpdate }) {
                 <Button
                     onClick={handleButtonClick}
                     sx={{
-                        minWidth: '55px !important',
-                        minHeight: '55px !important',
+                        minWidth: '110px !important',
+                        minHeight: '110px !important',
                         backgroundColor: 'silver',
                         color: 'black',
                         fontWeight: 'bold',
@@ -124,7 +135,7 @@ export default function Calculator({ selectedPlayer, onUpdate }) {
                     display: 'flex',
                     flexDirection: 'row',
                     backgroundColor: '#ddd',
-                    width: '100%',
+                    width: '440px',
                     height: '72px',
                     margin: 'auto',
                     padding: 2,
