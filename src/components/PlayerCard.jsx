@@ -105,9 +105,11 @@ export default function PlayerCard({ player, isSelected, onSelect, onScoreUpdate
                     </TableBody>
                 </Table>
             </TableContainer>
-            <Button variant='contained' sx={{ backgroundColor: '#0f0 !important' }} onClick={onScoreUpdate}>
-                Update Score
-            </Button>
+            {isCompetitionMode ? (
+                <Button variant='contained' sx={{ backgroundColor: '#0f0 !important' }} onClick={onScoreUpdate}>
+                    Update Score
+                </Button>
+            ) : null}
         </Box>
     );
 }

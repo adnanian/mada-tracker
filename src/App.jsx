@@ -24,17 +24,17 @@ function App() {
   const [triggerScoreChange, setTriggerScoreChange] = useState(false);
 
   useEffect(() => {
-    setPlayerInfo(
-      Array.from({ length: playerSize }, (_, index) => {
-        const playerObj = {
+    setPlayerInfo((players) => {
+      return Array.from({ length: playerSize }, (_, index) => {
+        const existingPlayer = players[index];
+        return existingPlayer || {
           number: index + 1,
-          name: `Player ${index + 1}`,
+          name: '',
           position: INITIAL_POSITION,
           score: 0,
         };
-        return playerObj;
-      })
-    );
+      });
+    });
   }, [playerSize]);
 
 
@@ -61,6 +61,12 @@ function App() {
     setPlayerInfo(playerInfo.map((player) => player.number === selectedPlayer.number ? { ...player, score: newScore } : player));
     setSelectedPlayer({ ...selectedPlayer, score: newScore });
     setTriggerScoreChange(false);
+  }
+
+  function resetGame() {
+    setPlayerInfo(playerInfo.map((player) => {
+      return { ...player, position: INITIAL_POSITION, score: 0 }
+    }));
   }
 
   const playerCards = playerInfo.map((player) => {
@@ -129,6 +135,13 @@ function App() {
             New Players
           </Button>
           <ModeSwitch />
+          <Button
+            onClick={resetGame}
+            variant='contained'
+            sx={{ marginTop: 2 }}
+          >
+            Reset
+          </Button>
         </Box>
         <Box sx={{
           flexDirection: 'row',
