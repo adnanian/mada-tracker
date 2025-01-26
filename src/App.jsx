@@ -67,6 +67,7 @@ function App() {
     setPlayerInfo(playerInfo.map((player) => {
       return { ...player, position: INITIAL_POSITION, score: 0 }
     }));
+    setSelectedPlayer(null);
   }
 
   const playerCards = playerInfo.map((player) => {
@@ -118,7 +119,7 @@ function App() {
           width: '80%'
 
         }}>
-          <Range />
+          <Range onResetGame={resetGame} />
           <PlayerSizeAdjustor numberOfPlayers={playerSize} onChange={handlePlayerSizeChange} />
           <Button
             onClick={() => handlePlayerSelection(null)}
@@ -135,13 +136,7 @@ function App() {
             New Players
           </Button>
           <ModeSwitch />
-          <Button
-            onClick={resetGame}
-            variant='contained'
-            sx={{ marginTop: 2 }}
-          >
-            Reset
-          </Button>
+
         </Box>
         <Box sx={{
           flexDirection: 'row',
