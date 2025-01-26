@@ -3,6 +3,7 @@
 import { Card, Button, Typography, TableContainer, Table, TableRow, TableCell, Box, TableBody, Tooltip } from "@mui/material";
 import { MadaContext } from "../context";
 import { useContext } from "react";
+import { WINNING_SCORE } from "../constants";
 
 export default function PlayerCard({ player, isSelected, onSelect, onScoreUpdate }) {
 
@@ -18,6 +19,7 @@ export default function PlayerCard({ player, isSelected, onSelect, onScoreUpdate
     }
 
     function backgroundColor() {
+        if (player.score >= WINNING_SCORE) return '#0ff';
         if (isInRange(player.position)) {
             return isSelected ? 'yellow' : '#ccc';
         } else {

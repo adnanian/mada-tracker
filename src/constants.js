@@ -7,3 +7,4 @@ export const NUM_ARRAY = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 export const OP_ARRAY = ['+', '-', '×', '÷'];
 export const SCORE_CHANGE_MIN = -400;
 export const SCORE_CHANGE_MAX = 500;
+export const WINNING_SCORE = 500;

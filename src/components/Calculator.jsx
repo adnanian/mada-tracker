@@ -96,9 +96,7 @@ export default function Calculator({ selectedPlayer, onUpdate }) {
     }
 
     function openCheckBox() {
-        if (number === 0 && operand === '÷') return true;
-        else if (number === 1 && operand === '×') return true;
-        return false;
+        return (number === 1 && operand === '×' && lowerBound < 0 && upperBound > 0);
     }
 
     const calcButtons = buttonChars.map((char, index) => {
