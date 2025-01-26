@@ -22,16 +22,16 @@ export default function NameForm({ players, onNameChange, open, onClose }) {
                 name={`p-${player.number}`}
                 value={player.name}
                 variant="outlined"
-                fullWidth
                 onChange={handleNameChange}
                 slotProps={{
                     input: {
-                        style: { textAlign: 'center' }, // Default alignment
+                        style: { textAlign: 'center', maxWidth: '350px' }, // Default alignment
                     },
                 }}
                 sx={{
                     '& .MuiInputBase-input': {
                         textAlign: { xs: 'left', sm: 'center' }, // Responsive alignment
+
                     },
                 }}
             />
@@ -47,6 +47,14 @@ export default function NameForm({ players, onNameChange, open, onClose }) {
             <Box
                 component='form'
                 autoComplete='off'
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    minWidth: '400px',
+                    '&  *': {
+                        margin: '5px auto'
+                    }
+                }}
             >
                 {playerFields}
                 <Button variant='contained' onClick={onClose} sx={{ width: '100%' }}>

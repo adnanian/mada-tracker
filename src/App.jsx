@@ -114,7 +114,8 @@ function App() {
           justifyContent: 'space-evenly',
           marginTop: '5px',
           '& > *': {
-            flexDirection: 'column'
+            flexDirection: 'column',
+            margin: '0 6px'
           },
           width: '80%'
 
