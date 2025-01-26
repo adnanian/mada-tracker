@@ -58,11 +58,6 @@ export default function Calculator({ selectedPlayer, onUpdate }) {
         }
         if (newPosition % 100 === 0) {
             triggerRangeOpen = true;
-            // if (newPosition === 0) {
-            //     // TODO
-            // } else {
-            //     // TODO
-            // }
         }
         onUpdate(newPosition, triggerRangeOpen);
         setNumber('');

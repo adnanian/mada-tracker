@@ -6,9 +6,10 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import { useContext } from 'react';
 import { MadaContext } from '../context';
+import { Typography } from '@mui/material';
 
 export default function RangeAdjustor({ players, open, onClose }) {
-    const { setLowerBound, setUpperBound, isInRange } = useContext(MadaContext);
+    const { lowerBound, setLowerBound, upperBound, setUpperBound, isInRange } = useContext(MadaContext);
 
     const playersInRange = players.filter((player) => isInRange(player.position));
 
@@ -34,12 +35,27 @@ export default function RangeAdjustor({ players, open, onClose }) {
             <DialogTitle>Adjust the Range</DialogTitle>
             <Box >
                 <ButtonGroup variant="outlined" aria-label="range adjustor" sx={{ dislpay: 'flex', flexDirection: 'column' }}>
-                    <Button id="lb" onClick={adjustRange}>
-                        Lower Bound (Set to: {lowestPosition - 100})
-                    </Button>
-                    <Button id="ub" onClick={adjustRange}>
-                        Upper Bound (Set to: {highestPosition + 100})
-                    </Button>
+                    {
+                        lowerBound !== (lowestPosition - 100) ? (
+                            <Button id="lb" onClick={adjustRange}>
+                                Lower Bound (Set to: {lowestPosition - 100})
+                            </Button>
+                        ) : null
+                    }
+                    {
+                        upperBound !== (highestPosition + 100) ? (
+                            <Button id="ub" onClick={adjustRange}>
+                                Upper Bound (Set to: {highestPosition + 100})
+                            </Button>
+                        ) : null
+                    }
+                    {
+                        (lowerBound === (lowestPosition - 100) && upperBound === (highestPosition + 100)) ? (
+                            <Typography variant='body1' component='p'>
+                                Range unadjustable! Click cancel!
+                            </Typography>
+                        ) : null
+                    }
                     <Button id="cancel-button" onClick={adjustRange}>
                         Cancel
                     </Button>
