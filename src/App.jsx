@@ -4,21 +4,17 @@ import Grid from '@mui/material/Grid2';
 import Box from '@mui/material/Box';
 import Dialog from '@mui/material/Dialog';
 
-import { MadaProvider } from './context';
-import Range from './components/Range';
 import { INITIAL_POSITION, MIN_PLAYER_SIZE } from './constants';
-import PlayerSizeAdjustor from './components/PlayerSizeAdjustor';
 import { useEffect, useState } from 'react';
 import PlayerCard from './components/PlayerCard';
-import ModeSwitch from './components/ModeSwitch';
 import Calculator from './components/Calculator';
-import RangeAdjustor from './components/RangeAdjustor';
-import NameForm from './components/NameForm';
-import ScoreForm from './components/ScoreForm';
+import RangeAdjustor from './components/dialog-forms/RangeAdjustor';
+import NameForm from './components/dialog-forms/NameForm';
+import ScoreForm from './components/dialog-forms/ScoreForm';
 import UnselectButton from './components/UnselectButton';
-import PlayerFormOpener from './components/PlayerFormOpener';
 import MiniTracker from './components/MiniTracker';
 import TurnManager from './components/TurnManager';
+import TopControls from './components/top-controls/TopControls';
 
 function App() {
   const [playerSize, setPlayerSize] = useState(MIN_PLAYER_SIZE);
@@ -46,17 +42,13 @@ function App() {
   }, [playerSize]);
 
 
-  function handlePlayerSizeChange(e) {
-    setPlayerSize(e.target.value);
-  }
+  // function handlePlayerSizeChange(e) {
+  //   setPlayerSize(e.target.value);
+  // }
 
   function handlePlayerNameChange(number, newName) {
     setPlayerInfo(playerInfo.map((player) => player.number === number ? { ...player, name: newName } : player));
   }
-
-  // function handlePlayerSelection(newSelectedPlayer) {
-  //   setSelectedPlayer(newSelectedPlayer);
-  // }
 
   function updateSelectedPlayerPosition(newPosition, openRangeAdjustor) {
     setPlayerInfo(playerInfo.map((player) => player.number === selectedPlayer.number ? { ...player, position: newPosition } : player));
@@ -84,14 +76,14 @@ function App() {
     }
   }
 
-  function resetGame() {
-    setPlayerInfo(playerInfo.map((player) => {
-      return { ...player, position: INITIAL_POSITION, score: 0 }
-    }));
-    setSelectedPlayer(null);
-    setRounds(0);
-    setTurnPlayer(null);
-  }
+  // function resetGame() {
+  //   setPlayerInfo(playerInfo.map((player) => {
+  //     return { ...player, position: INITIAL_POSITION, score: 0 }
+  //   }));
+  //   setSelectedPlayer(null);
+  //   setRounds(0);
+  //   setTurnPlayer(null);
+  // }
 
   const playerCards = playerInfo.map((player) => {
     return (
@@ -119,117 +111,103 @@ function App() {
 
 
   return (
-    <MadaProvider>
-      <Paper elevation={24} sx={{
-        width: '90vw',
-        minHeight: '90vh',
-        display: 'flex',
-        flexDirection: 'column',
-        margin: '30px auto',
-        alignItems: 'center',
-        borderRadius: '20px',
+    <Paper elevation={24} sx={{
+      width: '90vw',
+      minHeight: '90vh',
+      display: 'flex',
+      flexDirection: 'column',
+      margin: '30px auto',
+      alignItems: 'center',
+      borderRadius: '20px',
+      '& > *': {
+        display: 'inherit',
+        alignItems: 'inherit',
+        borderRadius: 'inherit'
+      },
+    }}>
+      <TopControls
+        onResetGame={resetGame}
+        playerSize={playerSize}
+        onChangePlayerSize={setPlayerSize}
+        onSelectPlayer={setSelectedPlayer}
+        onOpenNameForm={setTriggerNamesAdjust}
+      />
+      {
+        (!rounds || !turnPlayer) ? null : (
+          <TurnManager
+            players={playerInfo}
+            turnPlayer={turnPlayer}
+            rounds={rounds}
+            onUpdate={nextTurn}
+          />
+        )
+      }
+      <Box sx={{
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        marginTop: '5px',
         '& > *': {
-          display: 'inherit',
-          alignItems: 'inherit',
-          borderRadius: 'inherit'
+          flexDirection: 'column'
         },
+        width: '80%'
       }}>
-        <Box disabled={triggerRangeChange} sx={{
-          flexDirection: { xs: 'column', 'md': 'row' },
-          justifyContent: 'space-evenly',
-          marginTop: '5px',
-          '& > *': {
-            flexDirection: 'column',
-            marginLeft: '15px !important',
-            marginRight: '15px !important',
-          },
-          width: '80%'
-
-        }}>
-          <Range onResetGame={resetGame} />
-          <PlayerSizeAdjustor numberOfPlayers={playerSize} onChange={handlePlayerSizeChange} />
-          <UnselectButton onSelect={setSelectedPlayer} />
-          <PlayerFormOpener onOpenNameForm={setTriggerNamesAdjust} />
-          <ModeSwitch />
-
-        </Box>
-        {
-          (!rounds || !turnPlayer) ? null : (
-            <TurnManager
-              players={playerInfo}
-              turnPlayer={turnPlayer}
-              rounds={rounds}
-              onUpdate={nextTurn}
-            />
-          )
-        }
-        <Box sx={{
-          flexDirection: 'row',
-          justifyContent: 'space-evenly',
-          marginTop: '5px',
-          '& > *': {
-            flexDirection: 'column'
-          },
-          width: '80%'
-        }}>
-          <Grid
-            container
-            spacing={2} // Adjust spacing between grid items
-            sx={{
-              width: '1000px',
-              margin: '10px auto 0',
-              justifyContent: 'center', // Center the grid items
-              alignItems: 'center', // Align items vertically
-            }}
+        <Grid
+          container
+          spacing={2} // Adjust spacing between grid items
+          sx={{
+            width: '1000px',
+            margin: '10px auto 0',
+            justifyContent: 'center', // Center the grid items
+            alignItems: 'center', // Align items vertically
+          }}
+          disabled={triggerRangeChange}
+        >
+          {playerCards}
+        </Grid>
+        <Dialog
+          open={!!selectedPlayer && !triggerScoreChange}
+          // onClose={() => setSelectedPlayer(null)} // Default behavior for closing
+          onClose={(e, reason) => {
+            if (reason === 'backdropClick') {
+              console.log('Backdrop click disabled');
+              return; // Do nothing on backdrop click
+            }
+            setSelectedPlayer(null); // Allow closing for other reasons
+          }}
+          sx={{
+            // display: { xs: 'flex', md: 'none' },
+            margin: '0 auto !important',
+          }}
+        >
+          <UnselectButton
+            onSelect={setSelectedPlayer}
+            overrideHideControlSettings={true}
+          />
+          <MiniTracker selectedPlayer={selectedPlayer} />
+          <Calculator
+            selectedPlayer={selectedPlayer}
+            onUpdate={updateSelectedPlayerPosition}
             disabled={triggerRangeChange}
-          >
-            {playerCards}
-          </Grid>
-          <Dialog
-            open={!!selectedPlayer && !triggerScoreChange}
-            // onClose={() => setSelectedPlayer(null)} // Default behavior for closing
-            onClose={(e, reason) => {
-              if (reason === 'backdropClick') {
-                console.log('Backdrop click disabled');
-                return; // Do nothing on backdrop click
-              }
-              setSelectedPlayer(null); // Allow closing for other reasons
-            }}
-            sx={{
-              // display: { xs: 'flex', md: 'none' },
-              margin: '0 auto !important',
-            }}
-          >
-            <UnselectButton
-              onSelect={setSelectedPlayer}
-              overrideHideControlSettings={true}
-            />
-            <MiniTracker selectedPlayer={selectedPlayer} />
-            <Calculator
-              selectedPlayer={selectedPlayer}
-              onUpdate={updateSelectedPlayerPosition}
-              disabled={triggerRangeChange}
-            />
-          </Dialog>
-        </Box>
-        <RangeAdjustor
-          players={playerInfo}
-          open={triggerRangeChange && rounds > 1}
-          onClose={() => setTriggerRangeChange(false)}
-        />
-        <NameForm
-          players={playerInfo}
-          onNameChange={handlePlayerNameChange}
-          open={triggerNamesAdjust}
-          onClose={startGame}
-        />
-        <ScoreForm
-          open={triggerScoreChange}
-          onClose={() => setTriggerScoreChange(false)}
-          onUpdate={updateScore}
-        />
-      </Paper>
-    </MadaProvider>
+          />
+        </Dialog>
+      </Box>
+      <RangeAdjustor
+        players={playerInfo}
+        open={triggerRangeChange && rounds > 1}
+        onClose={() => setTriggerRangeChange(false)}
+      />
+      <NameForm
+        players={playerInfo}
+        onNameChange={handlePlayerNameChange}
+        open={triggerNamesAdjust}
+        onClose={startGame}
+      />
+      <ScoreForm
+        open={triggerScoreChange}
+        onClose={() => setTriggerScoreChange(false)}
+        onUpdate={updateScore}
+      />
+    </Paper>
   )
 }
 

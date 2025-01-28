@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useState } from 'react';
-import { SCORE_CHANGE_MIN, SCORE_CHANGE_MAX } from '../constants';
+import { SCORE_CHANGE_MIN, SCORE_CHANGE_MAX } from '../../constants';
 
 export default function ScoreForm({ open, onClose, onUpdate }) {
     const [score, setScore] = useState(0);

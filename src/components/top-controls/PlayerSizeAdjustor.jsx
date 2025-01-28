@@ -1,11 +1,10 @@
-/* eslint-disable react/prop-types */
 import { Slider, Card, Typography } from "@mui/material";
-import { MAX_PLAYER_SIZE, MIN_PLAYER_SIZE } from "../constants";
+import { MAX_PLAYER_SIZE, MIN_PLAYER_SIZE } from "../../constants";
 import { useCallback, useContext } from "react";
-import { MadaContext } from "../context";
+import { MadaContext } from "../../context";
 
-export default function PlayerSizeAdjustor({ numberOfPlayers, onChange }) {
-    const { hideControls } = useContext(MadaContext);
+export default function PlayerSizeAdjustor() {
+    const { playerSize, setPlayerSize, hideControls } = useContext(MadaContext);
 
     const marks = useCallback(() => {
         const playerMarks = [];
@@ -40,10 +39,10 @@ export default function PlayerSizeAdjustor({ numberOfPlayers, onChange }) {
             <Typography component='h5'>Number of Players</Typography>
             <Slider
                 aria-label="player-size"
-                value={numberOfPlayers}
+                value={playerSize}
                 min={MIN_PLAYER_SIZE}
                 max={MAX_PLAYER_SIZE}
-                onChange={onChange}
+                onChange={(e) => setPlayerSize(e.target.value)}
                 marks={marks()}
                 step={1}
                 valueLabelDisplay='auto'

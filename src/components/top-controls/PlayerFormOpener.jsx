@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
 import Button from '@mui/material/Button';
 import { useContext } from 'react';
-import { MadaContext } from '../context';
+import { MadaContext } from '../../context';
 
 
-export default function PlayerFormOpener({ onOpenNameForm }) {
+export default function PlayerFormOpener({ onOpen }) {
     const { hideControls } = useContext(MadaContext);
 
     if (hideControls) {
@@ -13,7 +13,7 @@ export default function PlayerFormOpener({ onOpenNameForm }) {
 
     return (
         <Button
-            onClick={() => onOpenNameForm(true)}
+            onClick={() => onOpen(true)}
             variant='contained'
             sx={{ marginTop: 2 }}
         >

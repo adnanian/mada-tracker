@@ -3,8 +3,8 @@ import Button from '@mui/material/Button';
 import { useContext } from 'react';
 import { MadaContext } from '../context';
 
-export default function UnselectButton({ onSelect, overrideHideControlSettings = false }) {
-    const { hideControls } = useContext(MadaContext);
+export default function UnselectButton({ overrideHideControlSettings = false }) {
+    const { setSelectedPlayer, hideControls } = useContext(MadaContext);
 
     if (hideControls && !overrideHideControlSettings) {
         return null;
@@ -12,7 +12,7 @@ export default function UnselectButton({ onSelect, overrideHideControlSettings =
 
     return (
         <Button
-            onClick={() => onSelect(null)}
+            onClick={() => setSelectedPlayer(null)}
             variant='contained'
             sx={{ marginTop: 2 }}
         >

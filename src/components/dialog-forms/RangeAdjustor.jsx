@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import { useContext } from 'react';
-import { MadaContext } from '../context';
+import { MadaContext } from '../../context';
 import { Typography } from '@mui/material';
 
 export default function RangeAdjustor({ players, open, onClose }) {

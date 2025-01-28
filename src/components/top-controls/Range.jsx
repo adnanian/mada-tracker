@@ -1,23 +1,50 @@
-/* eslint-disable react/prop-types */
 import { Card, Typography, Button } from "@mui/material"
-import { MadaContext } from "../context"
+import { MadaContext } from "../../context"
 import { useContext } from "react";
-import { INITIAL_LOWER_BOUND, INITIAL_UPPER_BOUND } from "../constants";
+import { INITIAL_LOWER_BOUND, INITIAL_POSITION, INITIAL_UPPER_BOUND } from "../../constants";
 
-export default function Range({ onResetGame }) {
+export default function Range() {
     const {
         lowerBound,
         setLowerBound,
         upperBound,
         setUpperBound,
-        hideControls
+        hideControls,
+        players,
+        setPlayers,
+        setRounds,
+        setSelectedPlayer,
+        setTurnPlayer
     } = useContext(MadaContext);
 
+    /**
+     * 
+     */
     function handleReset() {
         setLowerBound(INITIAL_LOWER_BOUND);
         setUpperBound(INITIAL_UPPER_BOUND);
-        onResetGame();
+        // onReset();
+        setPlayers(players.map((player) => {
+            return {
+                ...player,
+                position: INITIAL_POSITION,
+                score: 0,
+                suspensionStreak: 0
+            }
+        }));
+        setRounds(0);
+        setSelectedPlayer(null);
+        setTurnPlayer(null);
     }
+
+    // function resetGame() {
+    //     setPlayerInfo(playerInfo.map((player) => {
+    //       return { ...player, position: INITIAL_POSITION, score: 0 }
+    //     }));
+    //     setSelectedPlayer(null);
+    //     setRounds(0);
+    //     setTurnPlayer(null);
+    //   }
 
     return (
         <Card elevation={24} sx={{ padding: 3 }}>
