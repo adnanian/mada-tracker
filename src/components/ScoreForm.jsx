@@ -14,12 +14,13 @@ export default function ScoreForm({ open, onClose, onUpdate }) {
         // Ensure the score is within the allowed range before updating
         const validScore = Math.max(SCORE_CHANGE_MIN, Math.min(Number(score), SCORE_CHANGE_MAX));
         onUpdate(validScore);
+        setScore(0);
         onClose();
     }
 
     return (
         <Dialog onClose={onClose} open={open}>
-            <DialogTitle>Adjust the Range</DialogTitle>
+            <DialogTitle>Update Score</DialogTitle>
             <Box
                 component="form"
                 autoComplete="off"
@@ -52,14 +53,20 @@ export default function ScoreForm({ open, onClose, onUpdate }) {
                 <Button
                     variant="contained"
                     onClick={update}
-                    sx={{ width: '100%', height: '80px' }}
+                    sx={{
+                        width: '100%',
+                        height: { xs: '30px', md: '80px' }
+                    }}
                 >
                     Done!
                 </Button>
                 <Button
                     variant="contained"
                     onClick={onClose}
-                    sx={{ width: '100%', height: '80px' }}
+                    sx={{
+                        width: '100%',
+                        height: { xs: '30px', md: '80px' }
+                    }}
                 >
                     Cancel
                 </Button>

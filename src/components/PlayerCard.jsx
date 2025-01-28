@@ -98,17 +98,43 @@ export default function PlayerCard({ player, isSelected, onSelect, onScoreUpdate
                             </Tooltip>
                             {
                                 isCompetitionMode ? (
-                                    <Tooltip title='Score' placement='right'>
+                                    <Tooltip
+                                        title='Score'
+                                        placement='right'
+                                        sx={{
+                                            display: { xs: 'none', md: 'table-cell' }
+                                        }}
+                                    >
                                         <TableCell align='center'>{player.score}</TableCell>
                                     </Tooltip>
                                 ) : null
                             }
                         </TableRow>
+                        <TableRow
+                            sx={{
+                                display: { xs: 'default', md: 'none' }
+                            }}
+                        >
+                            <Tooltip
+                                title='Score'
+                                placement='right'
+                            >
+                                <TableCell align='center'>{player.score}</TableCell>
+                            </Tooltip>
+                        </TableRow>
                     </TableBody>
                 </Table>
             </TableContainer>
             {isCompetitionMode ? (
-                <Button variant='contained' sx={{ backgroundColor: '#0f0 !important' }} onClick={onScoreUpdate}>
+                <Button
+                    variant='contained'
+                    sx={{
+                        backgroundColor: '#0f0 !important',
+                        width: '100% !important',
+                        border: '1px solid black'
+                    }}
+                    onClick={onScoreUpdate}
+                >
                     Update Score
                 </Button>
             ) : null}

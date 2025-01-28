@@ -18,7 +18,7 @@ export default function RangeAdjustor({ players, open, onClose }) {
 
     function adjustRange(e) {
         const { id } = e.currentTarget; // Get the id of the clicked button
-        console.log("Clicked button id:", id);
+        // console.log("Clicked button id:", id);
 
         if (id === 'lb') {
             setLowerBound(() => lowestPosition - 100);

@@ -9,11 +9,12 @@ import Grid from '@mui/material/Grid2';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
+
 import { MadaContext } from '../context';
 import { useState, useContext } from 'react';
 import { NUM_ARRAY, OP_ARRAY } from '../constants';
 
-export default function Calculator({ selectedPlayer, onUpdate }) {
+export default function Calculator({ selectedPlayer, onUpdate, sx = {} }) {
     const { lowerBound, upperBound } = useContext(MadaContext);
     const [number, setNumber] = useState('');
     const [operand, setOperand] = useState('');
@@ -105,8 +106,8 @@ export default function Calculator({ selectedPlayer, onUpdate }) {
                 <Button
                     onClick={handleButtonClick}
                     sx={{
-                        minWidth: '110px !important',
-                        minHeight: '110px !important',
+                        minWidth: { xs: '50px !important', md: '110px !important' },
+                        minHeight: { xs: '50px !important', md: '110px !important' },
                         backgroundColor: 'silver',
                         color: 'black',
                         fontWeight: 'bold',
@@ -121,70 +122,77 @@ export default function Calculator({ selectedPlayer, onUpdate }) {
     });
 
     return (
-        <Paper elevation={24}>
-            <Card
+        <>
+            <Paper
                 elevation={24}
                 sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    backgroundColor: '#ddd',
-                    width: '440px',
-                    height: '72px',
-                    margin: 'auto',
-                    padding: 2,
-
-                }}>
-                <Grid
-                    container
-                    spacing={0} // No space between items
+                    ...sx
+                }}
+            >
+                <Card
+                    elevation={24}
                     sx={{
-                        minWidth: '100%',
-                        minHeight: '100%',
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(2, 1fr)', // Adjust for the number of columns
-                        gap: 0, // No gap between grid cells
-                        '& *': {
-                            fontSize: '40px',
-                        }
-                    }}
-                >
-                    <Grid size={6}>
-                        <Typography component='h3'>{operand}</Typography>
-                    </Grid>
-                    <Grid size={6}>
-                        <Typography component='h3'>{number}</Typography>
-                    </Grid>
+                        display: 'flex',
+                        flexDirection: 'row',
+                        backgroundColor: '#ddd',
+                        width: { xs: 'fit-content', height: '440px' },
+                        height: '72px',
+                        margin: 'auto',
+                        padding: 1,
 
-                </Grid>
-            </Card>
-            <ButtonGroup variant='contained' aria-label='calculator'>
-                <Grid
-                    container
-                    spacing={0} // No space between items
-                    sx={{
-                        minWidth: 'fit-content',
-                        minHeight: 'fit-content',
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(4, 1fr)', // Adjust for the number of columns
-                        gap: 0, // No gap between grid cells
-                    }}
-                >
-                    {calcButtons}
-                </Grid>
-            </ButtonGroup>
-            {
-                openCheckBox() ? (
-                    <FormGroup sx={{ flexDirection: 'column' }}>
-                        <FormControlLabel
-                            control={
-                                <Switch
-                                    checked={applySameColorRule}
-                                    onChange={(e) => setApplySameColorRule(e.target.checked)}
-                                />}
-                            label='Apply Same Color Rules' />
-                    </FormGroup>
-                ) : null
-            }
-        </Paper>
+                    }}>
+                    <Grid
+                        container
+                        spacing={0} // No space between items
+                        sx={{
+                            minWidth: '100%',
+                            minHeight: '100%',
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(2, 1fr)', // Adjust for the number of columns
+                            gap: 0, // No gap between grid cells
+                            '& *': {
+                                fontSize: '40px',
+                            }
+                        }}
+                    >
+                        <Grid size={6}>
+                            <Typography component='h3'>{operand}</Typography>
+                        </Grid>
+                        <Grid size={6}>
+                            <Typography component='h3'>{number}</Typography>
+                        </Grid>
+
+                    </Grid>
+                </Card>
+                <ButtonGroup variant='contained' aria-label='calculator'>
+                    <Grid
+                        container
+                        spacing={0} // No space between items
+                        sx={{
+                            minWidth: 'fit-content',
+                            minHeight: 'fit-content',
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(4, 1fr)', // Adjust for the number of columns
+                            gap: 0, // No gap between grid cells
+                        }}
+                    >
+                        {calcButtons}
+                    </Grid>
+                </ButtonGroup>
+                {
+                    openCheckBox() ? (
+                        <FormGroup sx={{ flexDirection: 'column' }}>
+                            <FormControlLabel
+                                control={
+                                    <Switch
+                                        checked={applySameColorRule}
+                                        onChange={(e) => setApplySameColorRule(e.target.checked)}
+                                    />}
+                                label='Apply Same Color Rules' />
+                        </FormGroup>
+                    ) : null
+                }
+            </Paper>
+        </>
     );
 }

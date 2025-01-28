@@ -1,9 +1,12 @@
 /* eslint-disable react/prop-types */
 import { Slider, Card, Typography } from "@mui/material";
 import { MAX_PLAYER_SIZE, MIN_PLAYER_SIZE } from "../constants";
-import { useCallback } from "react";
+import { useCallback, useContext } from "react";
+import { MadaContext } from "../context";
 
 export default function PlayerSizeAdjustor({ numberOfPlayers, onChange }) {
+    const { hideControls } = useContext(MadaContext);
+
     const marks = useCallback(() => {
         const playerMarks = [];
         for (let i = MIN_PLAYER_SIZE; i <= MAX_PLAYER_SIZE; i++) {
@@ -14,6 +17,10 @@ export default function PlayerSizeAdjustor({ numberOfPlayers, onChange }) {
         }
         return playerMarks;
     }, []);
+
+    if (hideControls) {
+        return null;
+    }
 
     return (
         <Card
@@ -26,7 +33,9 @@ export default function PlayerSizeAdjustor({ numberOfPlayers, onChange }) {
                 marginTop: 5,
                 width: '40%',
                 padding: 2,
-
+                '& > *': {
+                    marginTop: 3
+                }
             }}>
             <Typography component='h5'>Number of Players</Typography>
             <Slider

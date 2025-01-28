@@ -6,16 +6,40 @@ import { MadaContext } from '../context';
 
 export default function ModeSwitch() {
 
-    const { isCompetitionMode, setIsCompetitionMode } = useContext(MadaContext);
+    const {
+        isCompetitionMode,
+        setIsCompetitionMode,
+        hideControls,
+        setHideControls
+    } = useContext(MadaContext);
     return (
-        <FormGroup sx={{ flexDirection: 'column' }}>
+        <FormGroup sx={{
+            flexDirection: 'column',
+            border: '6px inset, gray',
+            padding: { xs: 0.125, md: 1, xl: 2 },
+            backgroundColor: 'silver'
+        }}>
+            {
+                hideControls ? null : (
+                    <FormControlLabel
+                        control={
+                            <Switch
+                                checked={isCompetitionMode}
+                                onChange={(e) => setIsCompetitionMode(e.target.checked)}
+                            />}
+                        label={isCompetitionMode ? 'Competition Mode' : 'Elimination Mode'}
+                    />
+                )
+            }
+
             <FormControlLabel
                 control={
                     <Switch
-                        checked={isCompetitionMode}
-                        onChange={(e) => setIsCompetitionMode(e.target.checked)}
+                        checked={!hideControls}
+                        onChange={(e) => setHideControls(!e.target.checked)}
                     />}
-                label={isCompetitionMode ? 'Competition Mode' : 'Elimination Mode'} />
+                label={hideControls ? 'Show Controls' : 'Hide Controls'}
+            />
         </FormGroup>
     )
 }
