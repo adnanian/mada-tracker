@@ -6,8 +6,26 @@ import UnselectButton from '../UnselectButton';
 import PlayerFormOpener from './PlayerFormOpener';
 import ModeSwitch from './ModeSwitch';
 import NameForm from '../dialog-forms/NameForm';
+import { useContext, useState } from 'react';
+import { MadaContext } from '../../context';
 
-export default function TopControls({ onOpenNameForm }) {
+export default function TopControls() {
+    const { players, setRounds, setTurnPlayer } = useContext(MadaContext);
+    const [triggerNamesAdjust, setTriggerNamesAdjust] = useState(false);
+
+    function startGame(e) {
+        e.preventDefault();
+        for (let player of players) {
+            if (player.name.replace(' ', '') === '') {
+                alert('Names cannot be blank!');
+                return;
+            }
+        }
+        setTriggerNamesAdjust(false);
+        setRounds(1);
+        setTurnPlayer(players[0]);
+    }
+
     return (
         <Box sx={{
             flexDirection: { xs: 'column', 'md': 'row' },
@@ -24,9 +42,9 @@ export default function TopControls({ onOpenNameForm }) {
             <Range />
             <PlayerSizeAdjustor />
             <UnselectButton />
-            <PlayerFormOpener onOpen={onOpenNameForm} />
+            <PlayerFormOpener onOpen={() => setTriggerNamesAdjust(true)} />
             <ModeSwitch />
-            <NameForm />
+            <NameForm open={triggerNamesAdjust} onClose={startGame} />
         </Box>
     );
 }

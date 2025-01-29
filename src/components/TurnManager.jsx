@@ -5,15 +5,23 @@ import Button from '@mui/material/Button';
 import { useContext } from 'react';
 import { MadaContext } from '../context';
 
-export default function TurnManager({ players, turnPlayer, rounds, onUpdate }) {
+export default function TurnManager() {
 
-    const { isEliminated } = useContext(MadaContext);
+    const { players, rounds, setRounds, turnPlayer, setTurnPlayer, isEliminated } = useContext(MadaContext);
     const activePlayers = players.filter((player) => !isEliminated(player));
 
     function handleDone() {
         const nextTurnIndex = (activePlayers.findIndex((player) => player.number === turnPlayer.number) + 1) % activePlayers.length;
         const roundCompleted = (nextTurnIndex === 0);
-        onUpdate(activePlayers[nextTurnIndex], roundCompleted)
+        // onUpdate(activePlayers[nextTurnIndex], roundCompleted)
+        setTurnPlayer(activePlayers[nextTurnIndex]);
+        if (roundCompleted) {
+            setRounds((rounds) => rounds + 1);
+        }
+    }
+
+    if (!rounds || !turnPlayer) {
+        return null;
     }
 
     return (

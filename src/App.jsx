@@ -1,80 +1,68 @@
 import './App.css';
 import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid2';
-import Box from '@mui/material/Box';
-import Dialog from '@mui/material/Dialog';
 
-import { INITIAL_POSITION, MIN_PLAYER_SIZE } from './constants';
-import { useEffect, useState } from 'react';
-import PlayerCard from './components/PlayerCard';
-import Calculator from './components/Calculator';
-import RangeAdjustor from './components/dialog-forms/RangeAdjustor';
-import NameForm from './components/dialog-forms/NameForm';
-import ScoreForm from './components/dialog-forms/ScoreForm';
-import UnselectButton from './components/UnselectButton';
-import MiniTracker from './components/MiniTracker';
-import TurnManager from './components/TurnManager';
 import TopControls from './components/top-controls/TopControls';
+import TurnManager from './components/TurnManager';
 
 function App() {
-  const [playerSize, setPlayerSize] = useState(MIN_PLAYER_SIZE);
-  const [playerInfo, setPlayerInfo] = useState([]);
-  const [selectedPlayer, setSelectedPlayer] = useState(null);
-  const [triggerRangeChange, setTriggerRangeChange] = useState(false);
-  const [triggerNamesAdjust, setTriggerNamesAdjust] = useState(false);
-  const [triggerScoreChange, setTriggerScoreChange] = useState(false);
-  const [rounds, setRounds] = useState(0);
-  const [turnPlayer, setTurnPlayer] = useState(null);
+  // const [playerSize, setPlayerSize] = useState(MIN_PLAYER_SIZE);
+  // const [playerInfo, setPlayerInfo] = useState([]);
+  // const [selectedPlayer, setSelectedPlayer] = useState(null);
+  // const [triggerRangeChange, setTriggerRangeChange] = useState(false);
+  // const [triggerNamesAdjust, setTriggerNamesAdjust] = useState(false);
+  // const [triggerScoreChange, setTriggerScoreChange] = useState(false);
+  // const [rounds, setRounds] = useState(0);
+  // const [turnPlayer, setTurnPlayer] = useState(null);
 
 
-  useEffect(() => {
-    setPlayerInfo((players) => {
-      return Array.from({ length: playerSize }, (_, index) => {
-        const existingPlayer = players[index];
-        return existingPlayer || {
-          number: index + 1,
-          name: '',
-          position: INITIAL_POSITION,
-          score: 0,
-        };
-      });
-    });
-  }, [playerSize]);
+  // useEffect(() => {
+  //   setPlayerInfo((players) => {
+  //     return Array.from({ length: playerSize }, (_, index) => {
+  //       const existingPlayer = players[index];
+  //       return existingPlayer || {
+  //         number: index + 1,
+  //         name: '',
+  //         position: INITIAL_POSITION,
+  //         score: 0,
+  //       };
+  //     });
+  //   });
+  // }, [playerSize]);
 
 
   // function handlePlayerSizeChange(e) {
   //   setPlayerSize(e.target.value);
   // }
 
-  function handlePlayerNameChange(number, newName) {
-    setPlayerInfo(playerInfo.map((player) => player.number === number ? { ...player, name: newName } : player));
-  }
+  // function handlePlayerNameChange(number, newName) {
+  //   setPlayerInfo(playerInfo.map((player) => player.number === number ? { ...player, name: newName } : player));
+  // }
 
-  function updateSelectedPlayerPosition(newPosition, openRangeAdjustor) {
-    setPlayerInfo(playerInfo.map((player) => player.number === selectedPlayer.number ? { ...player, position: newPosition } : player));
-    setSelectedPlayer({ ...selectedPlayer, position: newPosition });
-    setTriggerRangeChange(openRangeAdjustor);
-  }
+  // function updateSelectedPlayerPosition(newPosition, openRangeAdjustor) {
+  //   setPlayerInfo(playerInfo.map((player) => player.number === selectedPlayer.number ? { ...player, position: newPosition } : player));
+  //   setSelectedPlayer({ ...selectedPlayer, position: newPosition });
+  //   setTriggerRangeChange(openRangeAdjustor);
+  // }
 
-  function updateScore(points) {
-    const newScore = selectedPlayer.score + points;
-    setPlayerInfo(playerInfo.map((player) => player.number === selectedPlayer.number ? { ...player, score: newScore } : player));
-    setSelectedPlayer(null);
-    setTriggerScoreChange(false);
-  }
+  // function updateScore(points) {
+  //   const newScore = selectedPlayer.score + points;
+  //   setPlayerInfo(playerInfo.map((player) => player.number === selectedPlayer.number ? { ...player, score: newScore } : player));
+  //   setSelectedPlayer(null);
+  //   setTriggerScoreChange(false);
+  // }
 
-  function startGame() {
-    setTriggerNamesAdjust(false);
-    setRounds(1);
-    setTurnPlayer(playerInfo[0]);
-  }
+  // function startGame() {
+  //   setTriggerNamesAdjust(false);
+  //   setRounds(1);
+  //   setTurnPlayer(playerInfo[0]);
+  // }
 
-  function nextTurn(nextTurnPlayer, roundCompleted) {
-    setTurnPlayer(nextTurnPlayer);
-    if (roundCompleted) {
-      setRounds((rounds) => rounds + 1);
-    }
-  }
+  // function nextTurn(nextTurnPlayer, roundCompleted) {
+  //   setTurnPlayer(nextTurnPlayer);
+  //   if (roundCompleted) {
+  //     setRounds((rounds) => rounds + 1);
+  //   }
+  // }
 
   // function resetGame() {
   //   setPlayerInfo(playerInfo.map((player) => {
@@ -85,29 +73,29 @@ function App() {
   //   setTurnPlayer(null);
   // }
 
-  const playerCards = playerInfo.map((player) => {
-    return (
-      <Grid
-        key={player.number}
-        // item // Explicitly set this as a grid item
-        // xs={6} // Adjust for 2 items per row
-        // sm={3} // Responsive adjustment for different screen sizes
-        size={{ xs: 6, sm: 3 }}
-        sx={{
-          display: 'flex',
-          justifyContent: 'center', // Center each card in its grid cell
-          alignItems: 'center',
-        }}
-      >
-        <PlayerCard
-          player={player}
-          isSelected={selectedPlayer?.number === player.number}
-          onScoreUpdate={() => setTriggerScoreChange(true)}
-          onSelect={setSelectedPlayer}
-        />
-      </Grid>
-    );
-  });
+  // const playerCards = playerInfo.map((player) => {
+  //   return (
+  //     <Grid
+  //       key={player.number}
+  //       // item // Explicitly set this as a grid item
+  //       // xs={6} // Adjust for 2 items per row
+  //       // sm={3} // Responsive adjustment for different screen sizes
+  //       size={{ xs: 6, sm: 3 }}
+  //       sx={{
+  //         display: 'flex',
+  //         justifyContent: 'center', // Center each card in its grid cell
+  //         alignItems: 'center',
+  //       }}
+  //     >
+  //       <PlayerCard
+  //         player={player}
+  //         isSelected={selectedPlayer?.number === player.number}
+  //         onScoreUpdate={() => setTriggerScoreChange(true)}
+  //         onSelect={setSelectedPlayer}
+  //       />
+  //     </Grid>
+  //   );
+  // });
 
 
   return (
@@ -125,14 +113,9 @@ function App() {
         borderRadius: 'inherit'
       },
     }}>
-      <TopControls
-        onResetGame={resetGame}
-        playerSize={playerSize}
-        onChangePlayerSize={setPlayerSize}
-        onSelectPlayer={setSelectedPlayer}
-        onOpenNameForm={setTriggerNamesAdjust}
-      />
-      {
+      <TopControls />
+      <TurnManager />
+      {/* {
         (!rounds || !turnPlayer) ? null : (
           <TurnManager
             players={playerInfo}
@@ -141,8 +124,8 @@ function App() {
             onUpdate={nextTurn}
           />
         )
-      }
-      <Box sx={{
+      } */}
+      {/* <Box sx={{
         flexDirection: 'row',
         justifyContent: 'space-evenly',
         marginTop: '5px',
@@ -206,7 +189,7 @@ function App() {
         open={triggerScoreChange}
         onClose={() => setTriggerScoreChange(false)}
         onUpdate={updateScore}
-      />
+      /> */}
     </Paper>
   )
 }

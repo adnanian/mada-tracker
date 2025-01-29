@@ -50,7 +50,9 @@ const MadaProvider = ({ children }) => {
                 hideControls, setHideControls,
                 playerSize, setPlayerSize,
                 players, setPlayers,
-                rounds, setRounds
+                rounds, setRounds,
+                selectedPlayer, setSelectedPlayer,
+                turnPlayer, setTurnPlayer
             }}
         >
             {children}

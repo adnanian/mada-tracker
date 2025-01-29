@@ -5,35 +5,52 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import FormControl from '@mui/material/FormControl';
+import { useContext } from 'react';
+import { MadaContext } from '../../context';
 
-export default function NameForm({ players, onNameChange, open, onClose }) {
+export default function NameForm({ open, onClose }) {
+    const { players, setPlayers } = useContext(MadaContext);
 
     function handleNameChange(e) {
         const elementNameProp = e.currentTarget.name;
         const number = Number.parseInt(elementNameProp.substring(elementNameProp.indexOf('-') + 1));
-        onNameChange(number, e.currentTarget.value);
+        const newName = e.currentTarget.value;
+        setPlayers(players.map((player) => player.number === number ? { ...player, name: newName } : player));
+    }
+
+    function clearNames() {
+        setPlayers(players.map((player) => {
+            return {
+                ...player,
+                name: ''
+            }
+        }));
     }
 
     const playerFields = players.map((player) => {
         return (
-            <TextField
+            <FormControl
+                variant='outlined'
                 key={player.number}
-                name={`p-${player.number}`}
-                value={player.name}
-                variant="outlined"
-                onChange={handleNameChange}
-                slotProps={{
-                    input: {
-                        style: { textAlign: 'center', maxWidth: { xs: '225px', md: '350px' } }, // Default alignment
-                    },
-                }}
                 sx={{
-                    '& .MuiInputBase-input': {
-                        textAlign: { xs: 'left', sm: 'center' }, // Responsive alignment
-
-                    },
+                    width: 'fit-content',
+                    margin: 'auto'
                 }}
-            />
+            >
+                <TextField
+                    required
+                    name={`p-${player.number}`}
+                    label={`Player ${player.number}`}
+                    value={player.name}
+                    variant="outlined"
+                    onChange={handleNameChange}
+                    sx={{
+                        width: '90%',
+                        margin: '10px 0'
+                    }}
+                />
+            </FormControl>
         )
     });
 
@@ -71,13 +88,25 @@ export default function NameForm({ players, onNameChange, open, onClose }) {
                     display: 'flex',
                     flexDirection: 'column',
                     minWidth: { xs: '275px', md: '400px' },
-                    '&  *': {
-                        margin: '5px auto'
+                    '&  > *': {
+                        margin: 'auto'
                     }
                 }}
             >
+                <Button
+                    variant='contained'
+                    onClick={clearNames}
+                    sx={{ width: '100%' }}
+                >
+                    Clear Names
+                </Button>
                 {playerFields}
-                <Button variant='contained' onClick={onClose} sx={{ width: '100%' }}>
+                <Button
+                    variant='contained'
+                    type='submit'
+                    onClick={onClose}
+                    sx={{ width: '100%' }}
+                >
                     Done!
                 </Button>
             </Box>

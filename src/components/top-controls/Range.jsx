@@ -37,15 +37,6 @@ export default function Range() {
         setTurnPlayer(null);
     }
 
-    // function resetGame() {
-    //     setPlayerInfo(playerInfo.map((player) => {
-    //       return { ...player, position: INITIAL_POSITION, score: 0 }
-    //     }));
-    //     setSelectedPlayer(null);
-    //     setRounds(0);
-    //     setTurnPlayer(null);
-    //   }
-
     return (
         <Card elevation={24} sx={{ padding: 3 }}>
             <Typography
