@@ -18,7 +18,7 @@ import UnselectButton from '../UnselectButton';
 import MiniTracker from '../MiniTracker';
 
 export default function PositionCalculator({ selectedPlayer, onUpdate, sx = {} }) {
-    const { lowerBound, upperBound, setSelectedPlayer, rounds, turnPlayer } = useContext(MadaContext);
+    const { lowerBound, upperBound, setSelectedPlayer, rounds, turnPlayer, isInRange } = useContext(MadaContext);
     const [number, setNumber] = useState('');
     const [operand, setOperand] = useState('');
     const [applySameColorRule, setApplySameColorRule] = useState(false);
@@ -109,11 +109,16 @@ export default function PositionCalculator({ selectedPlayer, onUpdate, sx = {} }
     }
 
     function validateSelectedPlayer() {
+        console.log(turnPlayer);
+        console.log(selectedPlayer);
         if (!selectedPlayer) return false;
         if (rounds <= 0) return false;
         else {
             if (rounds === 1) {
                 return turnPlayer.number === selectedPlayer.number
+            }
+            if (turnPlayer.number !== selectedPlayer.number) {
+                return isInRange(turnPlayer.position) && isInRange(selectedPlayer.position);
             }
             return true;
         }

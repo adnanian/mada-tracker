@@ -1,18 +1,15 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { Card, Button, Typography, TableContainer, Table, TableRow, TableCell, Box, TableBody, Tooltip } from "@mui/material";
+import { Card, Typography, TableContainer, Table, TableRow, TableCell, Box, TableBody, Tooltip } from "@mui/material";
+import WarningIcon from '@mui/icons-material/Warning';
+import CloseIcon from '@mui/icons-material/Close';
 import { MadaContext } from "../../context";
 import { useContext } from "react";
 import { WINNING_SCORE } from "../../constants";
 
 export default function PlayerCard({ player, isSelected, onSelect, onScoreUpdate }) {
 
-    const { isInRange, isCompetitionMode } = useContext(MadaContext);
-
-    // function handleNameChange(e) {
-    //     e.stopPropagation(); // Prevent parent click from firing
-    //     onNameChange(player.number, e.target.value);
-    // }
+    const { isInRange, isCompetitionMode, isEliminated } = useContext(MadaContext);
 
     function handleSelectedPlayer() {
         onSelect(player);
@@ -25,6 +22,16 @@ export default function PlayerCard({ player, isSelected, onSelect, onScoreUpdate
         } else {
             return isSelected ? 'pink' : '#fa0';
         }
+    }
+
+    function iconDisplay() {
+        if (!isInRange(player.position)) {
+            const sx = {
+                color: '#400'
+            }
+            return isEliminated(player) ? <CloseIcon sx={sx} /> : <WarningIcon sx={sx} />
+        }
+        return null;
     }
 
     return (
@@ -58,7 +65,9 @@ export default function PlayerCard({ player, isSelected, onSelect, onScoreUpdate
                 }}
             >
                 {player.name}
+                {iconDisplay()}
             </Typography>
+
             <TableContainer
                 component={Card}
                 sx={{

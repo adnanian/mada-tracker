@@ -16,7 +16,8 @@ export default function PlayerView() {
         setSelectedPlayer,
         isInRange,
         isCompetitionMode,
-        turnPlayer
+        turnPlayer,
+        setTurnPlayer
     } = useContext(MadaContext);
     const [triggerRangeChange, setTriggerRangeChange] = useState(false);
     const [triggerScoreChange, setTriggerScoreChange] = useState(false);
@@ -37,6 +38,9 @@ export default function PlayerView() {
 
         }));
         setSelectedPlayer({ ...selectedPlayer, position: newPosition, eliminatorId: eliminatorId });
+        if (selectedPlayer.number === turnPlayer.number) {
+            setTurnPlayer({ ...turnPlayer, position: newPosition, eliminatorId: eliminatorId })
+        }
         setTriggerRangeChange(openRangeAdjustor);
         if (isOut) {
             setTriggerScoreChange(isCompetitionMode);
@@ -44,8 +48,23 @@ export default function PlayerView() {
     }
 
     function updateScore(points) {
-        const newScore = turnPlayer.score + points;
-        setPlayers(players.map((player) => player.number === turnPlayer.number ? { ...player, score: newScore } : player));
+        const newScore = (turnPlayer.number !== selectedPlayer.number) ? turnPlayer.score + points : turnPlayer.score - points;
+        setPlayers(players.map((player) => {
+            // return player.number === turnPlayer.number ? { ...player, score: newScore } : player
+            if (player.number === turnPlayer.number) {
+                let newSuspensionStreak = player.suspensionStreak;
+                if (turnPlayer.number === selectedPlayer.number) {
+                    newSuspensionStreak += 1;
+                }
+                return {
+                    ...player,
+                    score: newScore,
+                    suspensionStreak: newSuspensionStreak
+                }
+            } else {
+                return player;
+            }
+        }));
         setSelectedPlayer(null);
         setTriggerScoreChange(false);
     }
