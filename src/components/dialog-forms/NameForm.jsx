@@ -109,6 +109,13 @@ export default function NameForm({ open, onClose }) {
                 >
                     Done!
                 </Button>
+                <Button
+                    variant='contained'
+                    onClick={() => { }}
+                    sx={{ width: '100%', backgroundColor: 'red' }}
+                >
+                    Cancel
+                </Button>
             </Box>
         </Dialog>
     );
