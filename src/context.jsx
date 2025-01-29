@@ -24,7 +24,8 @@ const MadaProvider = ({ children }) => {
                     name: '',
                     position: INITIAL_POSITION,
                     score: 0,
-                    suspensionStreak: 0
+                    suspensionStreak: 0,
+                    eliminatorId: 0,
                 };
             });
         });
@@ -37,7 +38,40 @@ const MadaProvider = ({ children }) => {
     }
 
     function isEliminated(player) {
-        return !(isInRange(player.position) || (isCompetitionMode && player.score > 0));
+        return !(isInRange(player.position) || (isCompetitionMode && (player.score > 0 || player.suspensionStreak === 0)));
+    }
+
+    function suspensionUpdate() {
+        if (isCompetitionMode) {
+            if (!isInRange(turnPlayer.position)) {
+                if (turnPlayer.score <= 0) {
+                    setPlayers(players.map((player) => player.number === turnPlayer.number ? { ...player, suspensionStreak: (player.suspensionStreak + 1) } : player));
+                } else {
+                    setPlayers(players.map((player) => {
+                        if (player.number === turnPlayer.eliminatorId) {
+                            const newScore = player.score + turnPlayer.score;
+                            return { ...player, score: newScore }
+                        } else if (player.number === turnPlayer.number) {
+                            return { ...player, score: 0 }
+                        } else {
+                            return player;
+                        }
+                    }))
+                }
+            } else {
+                setPlayers(players.map((player) => {
+                    if (player.number === turnPlayer.number) {
+                        return {
+                            ...player,
+                            suspensionStreak: 0,
+                            eliminatorId: 0
+                        }
+                    } else {
+                        return player
+                    }
+                }));
+            }
+        }
     }
 
     return (
@@ -52,7 +86,8 @@ const MadaProvider = ({ children }) => {
                 players, setPlayers,
                 rounds, setRounds,
                 selectedPlayer, setSelectedPlayer,
-                turnPlayer, setTurnPlayer
+                turnPlayer, setTurnPlayer,
+                suspensionUpdate,
             }}
         >
             {children}

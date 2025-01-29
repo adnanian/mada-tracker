@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { Card, Button, Typography, TableContainer, Table, TableRow, TableCell, Box, TableBody, Tooltip } from "@mui/material";
-import { MadaContext } from "../context";
+import { MadaContext } from "../../context";
 import { useContext } from "react";
-import { WINNING_SCORE } from "../constants";
+import { WINNING_SCORE } from "../../constants";
 
 export default function PlayerCard({ player, isSelected, onSelect, onScoreUpdate }) {
 
@@ -59,24 +59,6 @@ export default function PlayerCard({ player, isSelected, onSelect, onScoreUpdate
             >
                 {player.name}
             </Typography>
-            {/* <TextField
-                value={player.name}
-                // onChange={handleNameChange}
-                variant="outlined"
-                fullWidth
-                readOnly
-                slotProps={{
-                    input: {
-                        style: { textAlign: 'center' }, // Default alignment
-                    },
-                }}
-                sx={{
-                    '& .MuiInputBase-input': {
-                        textAlign: { xs: 'left', sm: 'center' }, // Responsive alignment
-                    },
-                }}
-            /> */}
-
             <TableContainer
                 component={Card}
                 sx={{
@@ -110,22 +92,24 @@ export default function PlayerCard({ player, isSelected, onSelect, onScoreUpdate
                                 ) : null
                             }
                         </TableRow>
-                        <TableRow
-                            sx={{
-                                display: { xs: 'default', md: 'none' }
-                            }}
-                        >
-                            <Tooltip
-                                title='Score'
-                                placement='right'
+                        {isCompetitionMode ? (
+                            <TableRow
+                                sx={{
+                                    display: { xs: 'default', md: 'none' }
+                                }}
                             >
-                                <TableCell align='center'>{player.score}</TableCell>
-                            </Tooltip>
-                        </TableRow>
+                                <Tooltip
+                                    title='Score'
+                                    placement='right'
+                                >
+                                    <TableCell align='center'>{player.score}</TableCell>
+                                </Tooltip>
+                            </TableRow>
+                        ) : null}
                     </TableBody>
                 </Table>
             </TableContainer>
-            {isCompetitionMode ? (
+            {/* {isCompetitionMode ? (
                 <Button
                     variant='contained'
                     sx={{
@@ -137,7 +121,7 @@ export default function PlayerCard({ player, isSelected, onSelect, onScoreUpdate
                 >
                     Update Score
                 </Button>
-            ) : null}
+            ) : null} */}
         </Box>
     );
 }

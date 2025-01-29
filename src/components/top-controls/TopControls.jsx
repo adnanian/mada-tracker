@@ -5,7 +5,7 @@ import PlayerSizeAdjustor from './PlayerSizeAdjustor';
 import UnselectButton from '../UnselectButton';
 import PlayerFormOpener from './PlayerFormOpener';
 import ModeSwitch from './ModeSwitch';
-import NameForm from '../dialog-forms/NameForm';
+import NameForm from '../dialogs/NameForm';
 import { useContext, useState } from 'react';
 import { MadaContext } from '../../context';
 
@@ -44,7 +44,12 @@ export default function TopControls() {
             <UnselectButton />
             <PlayerFormOpener onOpen={() => setTriggerNamesAdjust(true)} />
             <ModeSwitch />
-            <NameForm open={triggerNamesAdjust} onClose={startGame} />
+            <NameForm
+                open={triggerNamesAdjust}
+                onClose={() => setTriggerNamesAdjust(false)}
+                onBegin={startGame}
+            />
+
         </Box>
     );
 }

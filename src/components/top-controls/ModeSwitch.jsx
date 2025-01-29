@@ -38,7 +38,8 @@ export default function ModeSwitch() {
                         checked={!hideControls}
                         onChange={(e) => setHideControls(!e.target.checked)}
                     />}
-                label={hideControls ? 'Show Controls' : 'Hide Controls'}
+                label={hideControls ? 'Controls Hidden' : 'Controls Shown'}
+                title='Toggle the switch on to show the controls.'
             />
         </FormGroup>
     )

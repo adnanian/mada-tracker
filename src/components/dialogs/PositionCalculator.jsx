@@ -9,13 +9,16 @@ import Grid from '@mui/material/Grid2';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
+import Dialog from '@mui/material/Dialog';
 
-import { MadaContext } from '../context';
+import { MadaContext } from '../../context';
 import { useState, useContext } from 'react';
-import { NUM_ARRAY, OP_ARRAY } from '../constants';
+import { NUM_ARRAY, OP_ARRAY } from '../../constants';
+import UnselectButton from '../UnselectButton';
+import MiniTracker from '../MiniTracker';
 
-export default function Calculator({ selectedPlayer, onUpdate, sx = {} }) {
-    const { lowerBound, upperBound } = useContext(MadaContext);
+export default function PositionCalculator({ selectedPlayer, onUpdate, sx = {} }) {
+    const { lowerBound, upperBound, setSelectedPlayer, rounds, turnPlayer } = useContext(MadaContext);
     const [number, setNumber] = useState('');
     const [operand, setOperand] = useState('');
     const [applySameColorRule, setApplySameColorRule] = useState(false);
@@ -24,11 +27,17 @@ export default function Calculator({ selectedPlayer, onUpdate, sx = {} }) {
         '7', '8', '9', '÷', '4', '5', '6', '×', '1', '2', '3', '-', 'C', '0', '=', '+'
     ];
 
+    /**
+     * 
+     */
     function clear() {
         setNumber('');
         setOperand('');
     }
 
+    /**
+     * 
+     */
     function calculate() {
         if (!(NUM_ARRAY.includes(number) && OP_ARRAY.includes(operand))) {
             throw new Error("Invalid arguments entered.");
@@ -65,6 +74,10 @@ export default function Calculator({ selectedPlayer, onUpdate, sx = {} }) {
         setOperand('');
     }
 
+    /**
+     * 
+     * @param {*} e 
+     */
     function handleButtonClick(e) {
         try {
             const symbol = e.target.textContent;
@@ -95,6 +108,17 @@ export default function Calculator({ selectedPlayer, onUpdate, sx = {} }) {
         return (number === 1 && operand === '×' && lowerBound < 0 && upperBound > 0);
     }
 
+    function validateSelectedPlayer() {
+        if (!selectedPlayer) return false;
+        if (rounds <= 0) return false;
+        else {
+            if (rounds === 1) {
+                return turnPlayer.number === selectedPlayer.number
+            }
+            return true;
+        }
+    }
+
     const calcButtons = buttonChars.map((char, index) => {
         return (
             <Grid
@@ -122,7 +146,26 @@ export default function Calculator({ selectedPlayer, onUpdate, sx = {} }) {
     });
 
     return (
-        <>
+        <Dialog
+            open={validateSelectedPlayer()}
+            // onClose={() => setSelectedPlayer(null)} // Default behavior for closing
+            onClose={(e, reason) => {
+                if (reason === 'backdropClick') {
+                    console.log('Backdrop click disabled');
+                    return; // Do nothing on backdrop click
+                }
+                setSelectedPlayer(null); // Allow closing for other reasons
+            }}
+            sx={{
+                // display: { xs: 'flex', md: 'none' },
+                margin: '0 auto !important',
+            }}
+        >
+            <UnselectButton
+                onSelect={setSelectedPlayer}
+                overrideHideControlSettings={true}
+            />
+            <MiniTracker selectedPlayer={selectedPlayer} />
             <Paper
                 elevation={24}
                 sx={{
@@ -193,6 +236,6 @@ export default function Calculator({ selectedPlayer, onUpdate, sx = {} }) {
                     ) : null
                 }
             </Paper>
-        </>
+        </Dialog>
     );
 }

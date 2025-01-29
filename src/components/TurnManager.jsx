@@ -7,10 +7,19 @@ import { MadaContext } from '../context';
 
 export default function TurnManager() {
 
-    const { players, rounds, setRounds, turnPlayer, setTurnPlayer, isEliminated } = useContext(MadaContext);
+    const {
+        players,
+        rounds,
+        setRounds,
+        turnPlayer,
+        setTurnPlayer,
+        isEliminated,
+        suspensionUpdate
+    } = useContext(MadaContext);
     const activePlayers = players.filter((player) => !isEliminated(player));
 
     function handleDone() {
+        suspensionUpdate();
         const nextTurnIndex = (activePlayers.findIndex((player) => player.number === turnPlayer.number) + 1) % activePlayers.length;
         const roundCompleted = (nextTurnIndex === 0);
         // onUpdate(activePlayers[nextTurnIndex], roundCompleted)
@@ -36,7 +45,11 @@ export default function TurnManager() {
             <Typography variant='h4' component='h4'>
                 Round {rounds}, {`${turnPlayer.name}'s Turn`}
             </Typography>
-            <Button variant='contained' onClick={handleDone}>
+            <Button
+                variant='contained'
+                onClick={handleDone}
+                disabled={rounds < 0}
+            >
                 Done
             </Button>
         </Card>

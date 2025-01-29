@@ -4,7 +4,7 @@ import { useCallback, useContext } from "react";
 import { MadaContext } from "../../context";
 
 export default function PlayerSizeAdjustor() {
-    const { playerSize, setPlayerSize, hideControls } = useContext(MadaContext);
+    const { playerSize, setPlayerSize, hideControls, rounds } = useContext(MadaContext);
 
     const marks = useCallback(() => {
         const playerMarks = [];
@@ -47,6 +47,7 @@ export default function PlayerSizeAdjustor() {
                 step={1}
                 valueLabelDisplay='auto'
                 sx={{ width: '90%' }}
+                disabled={rounds > 0}
             />
         </Card>
     );

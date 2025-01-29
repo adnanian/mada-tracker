@@ -9,7 +9,7 @@ import FormControl from '@mui/material/FormControl';
 import { useContext } from 'react';
 import { MadaContext } from '../../context';
 
-export default function NameForm({ open, onClose }) {
+export default function NameForm({ open, onClose, onBegin }) {
     const { players, setPlayers } = useContext(MadaContext);
 
     function handleNameChange(e) {
@@ -104,14 +104,14 @@ export default function NameForm({ open, onClose }) {
                 <Button
                     variant='contained'
                     type='submit'
-                    onClick={onClose}
+                    onClick={onBegin}
                     sx={{ width: '100%' }}
                 >
                     Done!
                 </Button>
                 <Button
                     variant='contained'
-                    onClick={() => { }}
+                    onClick={onClose}
                     sx={{ width: '100%', backgroundColor: 'red' }}
                 >
                     Cancel

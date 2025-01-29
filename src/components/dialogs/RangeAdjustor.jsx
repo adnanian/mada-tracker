@@ -8,8 +8,8 @@ import { useContext } from 'react';
 import { MadaContext } from '../../context';
 import { Typography } from '@mui/material';
 
-export default function RangeAdjustor({ players, open, onClose }) {
-    const { lowerBound, setLowerBound, upperBound, setUpperBound, isInRange } = useContext(MadaContext);
+export default function RangeAdjustor({ open, onClose }) {
+    const { lowerBound, setLowerBound, upperBound, setUpperBound, isInRange, players } = useContext(MadaContext);
 
     const playersInRange = players.filter((player) => isInRange(player.position));
 
