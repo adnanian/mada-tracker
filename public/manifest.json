@@ -1,0 +1,56 @@
+{
+    "short_name": "Mada Tracker",
+    "name": "System for Tracking Mada Gameplay",
+    "icons": [
+      {
+        "src": "applogo-192x192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "applogo-512x512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      },
+      {
+        "src": "applogo-57x57.png",
+        "sizes": "57x57",
+        "type": "image/png"
+      },
+      {
+        "src": "applogo-76x76.png",
+        "sizes": "76x76",
+        "type": "image/png"
+      },
+      {
+        "src": "applogo-114x114.png",
+        "sizes": "114x114",
+        "type": "image/png"
+      },
+      {
+        "src": "applogo-120x120.png",
+        "sizes": "120x120",
+        "type": "image/png"
+      },
+      {
+        "src": "applogo-144x144.png",
+        "sizes": "144x144",
+        "type": "image/png"
+      },
+      {
+        "src": "applogo-152x152.png",
+        "sizes": "152x152",
+        "type": "image/png"
+      },
+      {
+        "src": "applogo-180x180.png",
+        "sizes": "180x180",
+        "type": "image/png"
+      }
+    ],
+    "start_url": ".",
+    "display": "standalone",
+    "theme_color": "#000000",
+    "background_color": "#ffffff"
+  }
+  
