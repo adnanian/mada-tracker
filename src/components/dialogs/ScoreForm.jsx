@@ -69,16 +69,6 @@ export default function ScoreForm({ open, onClose, onUpdate }) {
                 >
                     Done!
                 </Button>
-                <Button
-                    variant="contained"
-                    onClick={onClose}
-                    sx={{
-                        width: '100%',
-                        height: { xs: '30px', md: '80px' }
-                    }}
-                >
-                    Cancel
-                </Button>
             </Box>
         </Dialog>
     );

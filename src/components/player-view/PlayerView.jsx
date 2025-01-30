@@ -85,7 +85,6 @@ export default function PlayerView() {
         setTriggerScoreChange(false);
     }
 
-
     const playerCards = players.map((player) => {
         return (
             <Grid
@@ -135,11 +134,23 @@ export default function PlayerView() {
             />
             <RangeAdjustor
                 open={triggerRangeChange}
-                onClose={() => setTriggerRangeChange(false)}
+                // onClose={() => setTriggerRangeChange(false)}
+                onClose={(e, reason) => {
+                    if (reason === 'backdropClick') {
+                        return;
+                    }
+                    setTriggerRangeChange(false);
+                }}
             />
             <ScoreForm
                 open={triggerScoreChange}
-                onClose={() => setTriggerScoreChange(false)}
+                // onClose={() => setTriggerScoreChange(false)}
+                onClose={(e, reason) => {
+                    if (reason === 'backdropClick') {
+                        return;
+                    }
+                    setTriggerScoreChange(false);
+                }}
                 onUpdate={updateScore}
             />
         </Box>

@@ -17,6 +17,11 @@ import { NUM_ARRAY, OP_ARRAY } from '../../constants';
 import UnselectButton from '../UnselectButton';
 import MiniTracker from '../MiniTracker';
 
+/**
+ * 
+ * @param {*} param0 
+ * @returns 
+ */
 export default function PositionCalculator({ selectedPlayer, onUpdate, sx = {} }) {
     const { lowerBound, upperBound, setSelectedPlayer, rounds, turnPlayer, isInRange } = useContext(MadaContext);
     const [number, setNumber] = useState('');
@@ -66,7 +71,7 @@ export default function PositionCalculator({ selectedPlayer, onUpdate, sx = {} }
                 }
                 break;
         }
-        if (newPosition % 100 === 0 && rounds > 1) {
+        if (newPosition % 100 === 0 && newPosition !== selectedPlayer.position && rounds > 1) {
             triggerRangeOpen = true;
         }
         onUpdate(newPosition, triggerRangeOpen);

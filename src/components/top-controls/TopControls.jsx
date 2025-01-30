@@ -26,10 +26,16 @@ export default function TopControls() {
      */
     function startGame(e) {
         e.preventDefault();
-        for (let player of players) {
-            if (player.name.replace(' ', '') === '') {
+        for (let i = 0; i < players.length; i++) {
+            if (players[i].name.replace(' ', '') === '') {
                 alert('Names cannot be blank!');
                 return;
+            }
+            for (let j = i + 1; j < players.length; j++) {
+                if (players[i].name.toLowerCase() === players[j].name.toLowerCase()) {
+                    alert('All names must be unique (case insensitive)!');
+                    return;
+                }
             }
         }
         setTriggerNamesAdjust(false);

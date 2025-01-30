@@ -45,31 +45,63 @@ export default function RangeAdjustor({ open, onClose }) {
         <Dialog onClose={onClose} open={open}>
             <DialogTitle>Adjust the Range</DialogTitle>
             <Box >
-                <ButtonGroup variant="outlined" aria-label="range adjustor" sx={{ dislpay: 'flex', flexDirection: 'column' }}>
+                <ButtonGroup
+                    variant="contained"
+                    aria-label="range adjustor"
+                    sx={{
+                        dislpay: 'flex',
+                        flexDirection: 'column',
+                        width: '100%',
+                        margin: '0 auto !important',
+                        '& > *': {
+                            minWidth: '75% !important',
+                            margin: '5px 3px !important'
+                        }
+                    }}
+                >
                     {
                         lowerBound !== (lowestPosition - 100) ? (
-                            <Button id="lb" onClick={adjustRange}>
+                            <Button
+                                id="lb"
+                                onClick={adjustRange}
+                                sx={{ backgroundColor: '#700' }}
+                            >
                                 Lower Bound (Set to: {lowestPosition - 100})
                             </Button>
                         ) : null
                     }
                     {
                         upperBound !== (highestPosition + 100) ? (
-                            <Button id="ub" onClick={adjustRange}>
+                            <Button
+                                id="ub"
+                                onClick={adjustRange}
+                                sx={{ backgroundColor: '#070' }}
+                            >
                                 Upper Bound (Set to: {highestPosition + 100})
                             </Button>
                         ) : null
                     }
                     {
                         (lowerBound === (lowestPosition - 100) && upperBound === (highestPosition + 100)) ? (
-                            <Typography variant='body1' component='p'>
-                                Range unadjustable! Click cancel!
-                            </Typography>
+                            <>
+                                <Typography
+                                    variant='body1'
+                                    component='p'
+                                    sx={{
+                                        typography: {
+                                            textAlign: 'center'
+                                        }
+                                    }}
+                                >
+                                    Range unadjustable!
+                                </Typography>
+                                <Button id="cancel-button" onClick={adjustRange}>
+                                    OK
+                                </Button>
+                            </>
                         ) : null
                     }
-                    <Button id="cancel-button" onClick={adjustRange}>
-                        Cancel
-                    </Button>
+
                 </ButtonGroup>
             </Box>
         </Dialog>
