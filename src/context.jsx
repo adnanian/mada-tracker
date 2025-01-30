@@ -48,11 +48,21 @@ const MadaProvider = ({ children }) => {
                     setPlayers(players.map((player) => player.number === turnPlayer.number ? { ...player, suspensionStreak: (player.suspensionStreak + 1) } : player));
                 } else {
                     setPlayers(players.map((player) => {
+                        // if (player.number === turnPlayer.eliminatorId && player.number !== turnPlayer.number) {
+                        //     const newScore = player.score + turnPlayer.score;
+                        //     return { ...player, score: newScore }
+                        // } else if (player.number === turnPlayer.number) {
+                        //     return { ...player, score: 0 }
+                        // } else {
+                        //     return player;
+                        // }
                         if (player.number === turnPlayer.eliminatorId) {
-                            const newScore = player.score + turnPlayer.score;
-                            return { ...player, score: newScore }
-                        } else if (player.number === turnPlayer.number) {
-                            return { ...player, score: 0 }
+                            if (player.number !== turnPlayer.number) {
+                                const newScore = player.score + turnPlayer.score;
+                                return { ...player, score: newScore }
+                            } else {
+                                return { ...player, score: 0 }
+                            }
                         } else {
                             return player;
                         }

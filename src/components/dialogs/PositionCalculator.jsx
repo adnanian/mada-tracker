@@ -109,8 +109,6 @@ export default function PositionCalculator({ selectedPlayer, onUpdate, sx = {} }
     }
 
     function validateSelectedPlayer() {
-        console.log(turnPlayer);
-        console.log(selectedPlayer);
         if (!selectedPlayer) return false;
         if (rounds <= 0) return false;
         else {

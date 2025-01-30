@@ -53,7 +53,7 @@ export default function PlayerView() {
             // return player.number === turnPlayer.number ? { ...player, score: newScore } : player
             if (player.number === turnPlayer.number) {
                 let newSuspensionStreak = player.suspensionStreak;
-                if (turnPlayer.number === selectedPlayer.number) {
+                if (turnPlayer.number === selectedPlayer.number && newScore === 0) {
                     newSuspensionStreak += 1;
                 }
                 return {

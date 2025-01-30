@@ -25,14 +25,17 @@ export default function TurnManager() {
         if (activePlayers.length === 1) {
             setRounds(-1);
             setGameStatus(`Winner: ${activePlayers[0].name}`);
+            return;
         }
         const maxScoreReacher = activePlayers.find((player) => player.score >= WINNING_SCORE);
         if (maxScoreReacher) {
             setRounds(-1);
             setGameStatus(`Winner: ${maxScoreReacher.name}`);
+            return;
         }
-        if (turnPlayer) {
+        if (turnPlayer?.name) {
             setGameStatus(`Round ${rounds}, ${turnPlayer.name}'s Turn`);
+            return;
         }
     }, [activePlayers, rounds, setRounds, turnPlayer]);
 
@@ -49,18 +52,6 @@ export default function TurnManager() {
     if (!rounds || !turnPlayer) {
         return null;
     }
-
-    // function getGameStatus() {
-
-    // }
-
-    // function isGameOver() {
-    //     return (
-    //         activePlayers.length === 1
-    //         || activePlayers.find((player) => player.score >= WINNING_SCORE)
-    //     );
-    // }
-
 
     return (
         <Card
