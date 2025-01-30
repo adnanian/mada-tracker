@@ -66,7 +66,7 @@ export default function PositionCalculator({ selectedPlayer, onUpdate, sx = {} }
                 }
                 break;
         }
-        if (newPosition % 100 === 0) {
+        if (newPosition % 100 === 0 && rounds > 1) {
             triggerRangeOpen = true;
         }
         onUpdate(newPosition, triggerRangeOpen);
