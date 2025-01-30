@@ -3,6 +3,11 @@ import { MadaContext } from "../../context"
 import { useContext } from "react";
 import { INITIAL_LOWER_BOUND, INITIAL_POSITION, INITIAL_UPPER_BOUND } from "../../constants";
 
+/**
+ * TODO
+ * 
+ * @returns 
+ */
 export default function Range() {
     const {
         lowerBound,
@@ -18,7 +23,7 @@ export default function Range() {
     } = useContext(MadaContext);
 
     /**
-     * 
+     * TODO
      */
     function handleReset() {
         setLowerBound(INITIAL_LOWER_BOUND);

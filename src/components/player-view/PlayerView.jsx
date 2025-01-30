@@ -7,6 +7,11 @@ import PositionCalculator from '../dialogs/PositionCalculator';
 import ScoreForm from '../dialogs/ScoreForm';
 import RangeAdjustor from '../dialogs/RangeAdjustor';
 
+/**
+ * TOOD
+ * 
+ * @returns 
+ */
 export default function PlayerView() {
 
     const {
@@ -22,6 +27,12 @@ export default function PlayerView() {
     const [triggerRangeChange, setTriggerRangeChange] = useState(false);
     const [triggerScoreChange, setTriggerScoreChange] = useState(false);
 
+    /**
+     * TODO
+     * 
+     * @param {*} newPosition 
+     * @param {*} openRangeAdjustor 
+     */
     function updateSelectedPlayerPosition(newPosition, openRangeAdjustor) {
         const isOut = !isInRange(newPosition);
         const eliminatorId = isOut ? turnPlayer.number : 0;
@@ -47,6 +58,11 @@ export default function PlayerView() {
         }
     }
 
+    /**
+     * TODO
+     * 
+     * @param {*} points 
+     */
     function updateScore(points) {
         const newScore = (turnPlayer.number !== selectedPlayer.number) ? turnPlayer.score + points : turnPlayer.score - points;
         setPlayers(players.map((player) => {

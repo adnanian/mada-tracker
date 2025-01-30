@@ -3,6 +3,11 @@ import { MAX_PLAYER_SIZE, MIN_PLAYER_SIZE } from "../../constants";
 import { useCallback, useContext } from "react";
 import { MadaContext } from "../../context";
 
+/**
+ * TODO
+ * 
+ * @returns 
+ */
 export default function PlayerSizeAdjustor() {
     const { playerSize, setPlayerSize, hideControls, rounds } = useContext(MadaContext);
 

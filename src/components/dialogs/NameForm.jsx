@@ -9,9 +9,20 @@ import FormControl from '@mui/material/FormControl';
 import { useContext } from 'react';
 import { MadaContext } from '../../context';
 
+/**
+ * TODO
+ * 
+ * @param {*} param0 
+ * @returns 
+ */
 export default function NameForm({ open, onClose, onBegin }) {
     const { players, setPlayers } = useContext(MadaContext);
 
+    /**
+     * TODO
+     * 
+     * @param {*} e 
+     */
     function handleNameChange(e) {
         const elementNameProp = e.currentTarget.name;
         const number = Number.parseInt(elementNameProp.substring(elementNameProp.indexOf('-') + 1));
@@ -19,6 +30,9 @@ export default function NameForm({ open, onClose, onBegin }) {
         setPlayers(players.map((player) => player.number === number ? { ...player, name: newName } : player));
     }
 
+    /**
+     * TODO
+     */
     function clearNames() {
         setPlayers(players.map((player) => {
             return {

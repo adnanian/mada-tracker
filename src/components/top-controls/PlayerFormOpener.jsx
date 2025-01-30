@@ -3,7 +3,12 @@ import Button from '@mui/material/Button';
 import { useContext } from 'react';
 import { MadaContext } from '../../context';
 
-
+/**
+ * TODO
+ * 
+ * @param {*} param0 
+ * @returns 
+ */
 export default function PlayerFormOpener({ onOpen }) {
     const { hideControls, rounds } = useContext(MadaContext);
 

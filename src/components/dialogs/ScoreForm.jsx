@@ -7,9 +7,18 @@ import Button from '@mui/material/Button';
 import { useState } from 'react';
 import { SCORE_CHANGE_MIN, SCORE_CHANGE_MAX } from '../../constants';
 
+/**
+ * TODO
+ * 
+ * @param {*} param0 
+ * @returns 
+ */
 export default function ScoreForm({ open, onClose, onUpdate }) {
     const [score, setScore] = useState(0);
 
+    /**
+     * TODO
+     */
     function update() {
         // Ensure the score is within the allowed range before updating
         const validScore = Math.max(SCORE_CHANGE_MIN, Math.min(Number(score), SCORE_CHANGE_MAX));

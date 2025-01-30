@@ -9,10 +9,21 @@ import NameForm from '../dialogs/NameForm';
 import { useContext, useState } from 'react';
 import { MadaContext } from '../../context';
 
+/**
+ * TODO
+ * 
+ * @returns 
+ */
 export default function TopControls() {
     const { players, setRounds, setTurnPlayer } = useContext(MadaContext);
     const [triggerNamesAdjust, setTriggerNamesAdjust] = useState(false);
 
+    /**
+     * TODO
+     * 
+     * @param {*} e 
+     * @returns 
+     */
     function startGame(e) {
         e.preventDefault();
         for (let player of players) {

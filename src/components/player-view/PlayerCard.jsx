@@ -7,14 +7,28 @@ import { MadaContext } from "../../context";
 import { useContext } from "react";
 import { WINNING_SCORE } from "../../constants";
 
+/**
+ * TODO
+ * 
+ * @param {*} param0 
+ * @returns 
+ */
 export default function PlayerCard({ player, isSelected, onSelect, onScoreUpdate }) {
 
     const { isInRange, isCompetitionMode, isEliminated } = useContext(MadaContext);
 
+    /**
+     * TODO
+     */
     function handleSelectedPlayer() {
         onSelect(player);
     }
 
+    /**
+     * TODO
+     * 
+     * @returns 
+     */
     function backgroundColor() {
         if (player.score >= WINNING_SCORE) return '#0ff';
         if (isInRange(player.position)) {
@@ -24,6 +38,11 @@ export default function PlayerCard({ player, isSelected, onSelect, onScoreUpdate
         }
     }
 
+    /**
+     * TODO
+     * 
+     * @returns 
+     */
     function iconDisplay() {
         if (!isInRange(player.position)) {
             const sx = {

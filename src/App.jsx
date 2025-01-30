@@ -5,6 +5,11 @@ import TurnManager from './components/TurnManager';
 import PlayerView from './components/player-view/PlayerView';
 import { MadaProvider } from './context.jsx'
 
+/**
+ * TODO
+ * 
+ * @returns 
+ */
 function App() {
 
   return (

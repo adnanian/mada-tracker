@@ -8,6 +8,12 @@ import { useContext } from 'react';
 import { MadaContext } from '../../context';
 import { Typography } from '@mui/material';
 
+/**
+ * TODO
+ * 
+ * @param {*} param0 
+ * @returns 
+ */
 export default function RangeAdjustor({ open, onClose }) {
     const { lowerBound, setLowerBound, upperBound, setUpperBound, isInRange, players } = useContext(MadaContext);
 
@@ -16,6 +22,11 @@ export default function RangeAdjustor({ open, onClose }) {
     const lowestPosition = Math.min(...playersInRange.map((player) => player.position));
     const highestPosition = Math.max(...playersInRange.map((player) => player.position));
 
+    /**
+     * TODO
+     * 
+     * @param {*} e 
+     */
     function adjustRange(e) {
         const { id } = e.currentTarget; // Get the id of the clicked button
         // console.log("Clicked button id:", id);

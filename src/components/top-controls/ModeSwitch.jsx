@@ -4,6 +4,11 @@ import Switch from '@mui/material/Switch';
 import { useContext } from 'react';
 import { MadaContext } from '../../context';
 
+/**
+ * TODO
+ * 
+ * @returns 
+ */
 export default function ModeSwitch() {
 
     const {
@@ -12,6 +17,7 @@ export default function ModeSwitch() {
         hideControls,
         setHideControls
     } = useContext(MadaContext);
+
     return (
         <FormGroup sx={{
             flexDirection: 'column',

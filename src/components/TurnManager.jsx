@@ -6,6 +6,11 @@ import { useContext, useEffect, useState } from 'react';
 import { MadaContext } from '../context';
 import { WINNING_SCORE } from '../constants';
 
+/**
+ * TODO
+ * 
+ * @returns 
+ */
 export default function TurnManager() {
 
     const {
@@ -39,6 +44,9 @@ export default function TurnManager() {
         }
     }, [activePlayers, rounds, setRounds, turnPlayer]);
 
+    /**
+     * TODO
+     */
     function handleDone() {
         suspensionUpdate();
         const nextTurnIndex = (activePlayers.findIndex((player) => player.number === turnPlayer.number) + 1) % activePlayers.length;
