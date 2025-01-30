@@ -2,7 +2,7 @@ import './App.css';
 import Paper from '@mui/material/Paper';
 import TopControls from './components/top-controls/TopControls';
 import TurnManager from './components/TurnManager';
-import PlayerView from './components/player-view/PlayerView';
+import PlayerViewer from './components/player-viewer/PlayerViewer';
 import { MadaProvider } from './context.jsx'
 
 /**
@@ -30,7 +30,7 @@ function App() {
       }}>
         <TopControls />
         <TurnManager />
-        <PlayerView />
+        <PlayerViewer />
       </Paper>
     </MadaProvider>
   )

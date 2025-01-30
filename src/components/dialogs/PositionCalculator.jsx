@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
@@ -18,14 +17,16 @@ import UnselectButton from '../UnselectButton';
 import MiniTracker from '../MiniTracker';
 
 /**
+ * Renders a modal containing a calculator for the 
+ * current player to calculate new positions.
  * 
- * @param {*} param0 
- * @returns 
+ * @param {object} props the component props.
+ * @returns the calculator used to update positions.
  */
 export default function PositionCalculator({ selectedPlayer, onUpdate, sx = {} }) {
     const { lowerBound, upperBound, setSelectedPlayer, rounds, turnPlayer, isInRange } = useContext(MadaContext);
     const [number, setNumber] = useState('');
-    const [operand, setOperand] = useState('');
+    const [operator, setOperator] = useState('');
     const [applySameColorRule, setApplySameColorRule] = useState(false);
 
     const buttonChars = [
@@ -33,23 +34,27 @@ export default function PositionCalculator({ selectedPlayer, onUpdate, sx = {} }
     ];
 
     /**
-     * 
+     * Clears the calculator.
      */
     function clear() {
         setNumber('');
-        setOperand('');
+        setOperator('');
     }
 
     /**
+     * Applies the calculation with the given number and operator
+     * to the position of the currently selected player.
      * 
+     * Will also check if all the conditions to change the range
+     * are met.
      */
     function calculate() {
-        if (!(NUM_ARRAY.includes(number) && OP_ARRAY.includes(operand))) {
+        if (!(NUM_ARRAY.includes(number) && OP_ARRAY.includes(operator))) {
             throw new Error("Invalid arguments entered.");
         }
         let newPosition = 0;
         let triggerRangeOpen = false;
-        switch (operand) {
+        switch (operator) {
             case '+':
                 newPosition = selectedPlayer.position + number;
                 break;
@@ -76,12 +81,25 @@ export default function PositionCalculator({ selectedPlayer, onUpdate, sx = {} }
         }
         onUpdate(newPosition, triggerRangeOpen);
         setNumber('');
-        setOperand('');
+        setOperator('');
     }
 
     /**
+     * Performs the appropriate action on the calculator
+     * depending on the button clicked.
      * 
-     * @param {*} e 
+     * If a number was clicked, then that number will overwrite the currently
+     * shown number.
+     * 
+     * If an operator was clicked, then that operator will overwrite the currently
+     * shown operator.
+     * 
+     * If the 'C' button was clicked, then the display on the calculator will be
+     * cleared.
+     * 
+     * If the 
+     * 
+     * @param {Event} e the event. 
      */
     function handleButtonClick(e) {
         try {
@@ -91,7 +109,7 @@ export default function PositionCalculator({ selectedPlayer, onUpdate, sx = {} }
                 case '-':
                 case '×':
                 case '÷':
-                    setOperand(symbol);
+                    setOperator(symbol);
                     break;
                 case '=':
                     calculate();
@@ -109,10 +127,18 @@ export default function PositionCalculator({ selectedPlayer, onUpdate, sx = {} }
 
     }
 
+    /**
+     * 
+     * @returns 
+     */
     function openCheckBox() {
-        return (number === 1 && operand === '×' && lowerBound < 0 && upperBound > 0);
+        return (number === 1 && operator === '×' && lowerBound < 0 && upperBound > 0);
     }
 
+    /**
+     * 
+     * @returns 
+     */
     function validateSelectedPlayer() {
         if (!selectedPlayer) return false;
         if (rounds <= 0) return false;
@@ -207,7 +233,7 @@ export default function PositionCalculator({ selectedPlayer, onUpdate, sx = {} }
                         }}
                     >
                         <Grid size={6}>
-                            <Typography component='h3'>{operand}</Typography>
+                            <Typography component='h3'>{operator}</Typography>
                         </Grid>
                         <Grid size={6}>
                             <Typography component='h3'>{number}</Typography>

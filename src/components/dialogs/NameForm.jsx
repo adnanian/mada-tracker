@@ -10,18 +10,19 @@ import { useContext } from 'react';
 import { MadaContext } from '../../context';
 
 /**
- * TODO
+ * Renders a modal containing a form, prompting the user to
+ * set the names of the players or teams.
  * 
- * @param {*} param0 
- * @returns 
+ * @param {object} props the component props.
+ * @returns a dialog form to enter the names of the players.
  */
 export default function NameForm({ open, onClose, onBegin }) {
     const { players, setPlayers } = useContext(MadaContext);
 
     /**
-     * TODO
+     * Updates the names of the players.
      * 
-     * @param {*} e 
+     * @param {Event} e the event. 
      */
     function handleNameChange(e) {
         const elementNameProp = e.currentTarget.name;
@@ -31,7 +32,8 @@ export default function NameForm({ open, onClose, onBegin }) {
     }
 
     /**
-     * TODO
+     * Clears all the text fields, allowing the players to enter fresh,
+     * new names.
      */
     function clearNames() {
         setPlayers(players.map((player) => {

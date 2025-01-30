@@ -12,7 +12,7 @@ import RangeAdjustor from '../dialogs/RangeAdjustor';
  * 
  * @returns 
  */
-export default function PlayerView() {
+export default function PlayerViewer() {
 
     const {
         players,
