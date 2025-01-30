@@ -65,12 +65,25 @@ export default function TurnManager() {
         <Card
             elevation={24}
             sx={{
+                borderRadius: 'inherit',
+                maxWidth: { xs: '80vw', md: 'fit-content' },
+                display: 'inherit',
+                flexDirection: { xs: 'column', sm: 'row' },
+                marginTop: 5,
                 '& > *': {
-                    margin: '5px 10px'
+                    margin: '10px 15px !important'
                 }
             }}
         >
-            <Typography variant='h4' component='h4'>
+            <Typography
+                variant='h4'
+                component='h4'
+                sx={{
+                    typography: {
+                        textAlign: 'center'
+                    }
+                }}
+            >
                 {gameStatus}
             </Typography>
             <Button

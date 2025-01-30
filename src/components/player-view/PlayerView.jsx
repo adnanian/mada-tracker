@@ -122,7 +122,7 @@ export default function PlayerView() {
                 spacing={2} // Adjust spacing between grid items
                 sx={{
                     width: '1000px',
-                    margin: '10px auto 0',
+                    margin: '10px auto 20px',
                     justifyContent: 'center', // Center the grid items
                     alignItems: 'center', // Align items vertically
                 }}

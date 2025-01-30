@@ -43,7 +43,15 @@ export default function Range() {
     }
 
     return (
-        <Card elevation={24} sx={{ padding: 3 }}>
+        <Card
+            elevation={24}
+            sx={{
+                padding: 3,
+                borderRadius: 'inherit',
+                display: 'inherit',
+
+            }}
+        >
             <Typography
                 variant='h2'
                 component='h1'
