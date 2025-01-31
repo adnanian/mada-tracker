@@ -30,7 +30,7 @@ export default function ScoreForm({ open, onClose, onUpdate }) {
 
     return (
         <Dialog onClose={onClose} open={open}>
-            <DialogTitle>Update Score</DialogTitle>
+            <DialogTitle>Add Points</DialogTitle>
             <Box
                 component="form"
                 autoComplete="off"
