@@ -5,15 +5,16 @@ import { useContext } from 'react';
 import { MadaContext } from '../context';
 
 /**
- * TODO
+ * Renders a small card containing the currently selected player's name and
+ * position, as well as the current range.
  * 
- * @param {*} param0 
- * @returns 
+ * This is only displayed on the PositionCalculator.
+ * 
+ * @param {object} props the component props. 
+ * @returns the mini view of the range and player's information.
  */
 export default function MiniTracker({ selectedPlayer }) {
     const { lowerBound, upperBound, isInRange } = useContext(MadaContext);
-
-    // console.log(selectedPlayer);
 
     return (
         <Card sx={{

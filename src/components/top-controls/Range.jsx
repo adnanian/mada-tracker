@@ -4,9 +4,10 @@ import { useContext } from "react";
 import { INITIAL_LOWER_BOUND, INITIAL_POSITION, INITIAL_UPPER_BOUND } from "../../constants";
 
 /**
- * TODO
+ * Renders the title of this application, the current range,
+ * and a button to reset the whole game.
  * 
- * @returns 
+ * @returns the title, range, and reset button.
  */
 export default function Range() {
     const {
@@ -23,12 +24,13 @@ export default function Range() {
     } = useContext(MadaContext);
 
     /**
-     * TODO
+     * Resets the game.
      */
     function handleReset() {
+        // First, reset the lower bound.
         setLowerBound(INITIAL_LOWER_BOUND);
         setUpperBound(INITIAL_UPPER_BOUND);
-        // onReset();
+        // Next, reset the players' data.
         setPlayers(players.map((player) => {
             return {
                 ...player,
@@ -37,7 +39,9 @@ export default function Range() {
                 suspensionStreak: 0
             }
         }));
+        // Then, set the number of rounds back to zero.
         setRounds(0);
+        // Finally, set the selected and turn players to null.
         setSelectedPlayer(null);
         setTurnPlayer(null);
     }

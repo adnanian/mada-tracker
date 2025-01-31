@@ -4,7 +4,12 @@ import { useContext } from 'react';
 import { MadaContext } from '../context';
 
 /**
- * TODO
+ * Renders a button to deselect the selected player.
+ * 
+ * This button is used in TopComponents and PositionCalculator.
+ * The latter component requires the prop, overrideHideControlSettings
+ * to be set to true, so that the button will display even if the context
+ * state value, hideControls, is true.
  * 
  * @param {*} param0 
  * @returns 

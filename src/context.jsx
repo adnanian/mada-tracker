@@ -4,14 +4,36 @@ import { INITIAL_LOWER_BOUND, INITIAL_POSITION, INITIAL_UPPER_BOUND, MIN_PLAYER_
 
 const MadaContext = createContext();
 
+/**
+ * Renders a context provider of a massive amount of player and game information.
+ * This helps facilitate player selection, player info update, without having to
+ * prop drill values into every single component.
+ * 
+ * 
+ * @param {object} props the component props. 
+ * @returns the provider for MadaContext.
+ */
 const MadaProvider = ({ children }) => {
+    // The lowerBound and upperBound make up the range.
     const [lowerBound, setLowerBound] = useState(INITIAL_LOWER_BOUND);
     const [upperBound, setUpperBound] = useState(INITIAL_UPPER_BOUND);
+
+    // If true, then the mode is competition mode, elimination mode otherwise.
     const [isCompetitionMode, setIsCompetitionMode] = useState(false);
+
+    // If true, then certain components will be hidden.
     const [hideControls, setHideControls] = useState(false);
+
+    // The current number of players.
     const [playerSize, setPlayerSize] = useState(MIN_PLAYER_SIZE);
+
+    // The list of players.
     const [players, setPlayers] = useState([]);
+
+    // The number of rounds (i.e. the number of iterations over the active players.)
     const [rounds, setRounds] = useState(0);
+
+    // Self explanatory.
     const [selectedPlayer, setSelectedPlayer] = useState(null);
     const [turnPlayer, setTurnPlayer] = useState(null);
 
@@ -24,6 +46,7 @@ const MadaProvider = ({ children }) => {
                     name: '',
                     position: INITIAL_POSITION,
                     score: 0,
+                    // marker for helping eliminated players suspended for too long.
                     suspensionStreak: 0,
                     eliminatorId: 0,
                 };
@@ -31,12 +54,28 @@ const MadaProvider = ({ children }) => {
         });
     }, [playerSize]);
 
-    // console.log(`[${lowerBound}, ${upperBound}]`)
-
+    /**
+     * Return whether a given position is in range.
+     * 
+     * Note: the bounds are included in the range.
+     * 
+     * @param {number} position the position. 
+     * @returns true if the position is within the range, false otherwise.
+     */
     function isInRange(position) {
         return position >= lowerBound && position <= upperBound;
     }
 
+    /**
+     * Returns whether a player has been eliminated.
+     * 
+     * A player is eliminated if his/her position has been moved outside the range in elimination mode.
+     * In competition mode, that player is suspended instead. Being "suspended" still 
+     * 
+     * 
+     * @param {object} player the player. 
+     * @returns 
+     */
     function isEliminated(player) {
         return !(isInRange(player.position) || (isCompetitionMode && (player.score > 0 || player.suspensionStreak === 0)));
     }

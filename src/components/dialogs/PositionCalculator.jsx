@@ -49,11 +49,13 @@ export default function PositionCalculator({ selectedPlayer, onUpdate, sx = {} }
      * are met.
      */
     function calculate() {
+        // First, checks that valid arguments were entered (a valid operator and number).
         if (!(NUM_ARRAY.includes(number) && OP_ARRAY.includes(operator))) {
             throw new Error("Invalid arguments entered.");
         }
+        // Next, initializes the variables and performs the appropriate calculation.
         let newPosition = 0;
-        let triggerRangeOpen = false;
+        let triggerRangeChangeOpen = false;
         switch (operator) {
             case '+':
                 newPosition = selectedPlayer.position + number;
@@ -76,10 +78,13 @@ export default function PositionCalculator({ selectedPlayer, onUpdate, sx = {} }
                 }
                 break;
         }
+        // Then, checks to see if the range should be updated.
         if (newPosition % 100 === 0 && newPosition !== selectedPlayer.position && rounds > 1) {
-            triggerRangeOpen = true;
+            triggerRangeChangeOpen = true;
         }
-        onUpdate(newPosition, triggerRangeOpen);
+        // After that, executes the callback to update the information in PlayerViewer.
+        onUpdate(newPosition, triggerRangeChangeOpen);
+        // Finally, clears the calculator.
         setNumber('');
         setOperator('');
     }
@@ -128,16 +133,28 @@ export default function PositionCalculator({ selectedPlayer, onUpdate, sx = {} }
     }
 
     /**
+     * Checks whether the calculator should show the optional
+     * toggle of making a "× 1" a "× -1". According to the rules of Mada
+     * as of January 30, 2025, this is allowed to occur if and only if
+     * the lower bound is negative and the upper bound is positive.
      * 
-     * @returns 
+     * @returns true if the conditions for making "× 1" negative are met, false otherwise.
      */
     function openCheckBox() {
         return (number === 1 && operator === '×' && lowerBound < 0 && upperBound > 0);
     }
 
     /**
+     * Checks that all the conditions for opening the calculator modal are met.
+     * Here are the following conditions:
      * 
-     * @returns 
+     * 1. A player must be selected.
+     * 2. A game must be in session.
+     * 3. If it's the first round, then the turn player has selected his/her self.
+     * 4. If it's been at least two rounds, then the turn player and a selected player
+     * other than the turn player must both be within the range.
+     * 
+     * @returns true if the calculator opening conditions are met, false otherwise.
      */
     function validateSelectedPlayer() {
         if (!selectedPlayer) return false;
@@ -182,7 +199,6 @@ export default function PositionCalculator({ selectedPlayer, onUpdate, sx = {} }
     return (
         <Dialog
             open={validateSelectedPlayer()}
-            // onClose={() => setSelectedPlayer(null)} // Default behavior for closing
             onClose={(e, reason) => {
                 if (reason === 'backdropClick') {
                     console.log('Backdrop click disabled');
@@ -191,7 +207,6 @@ export default function PositionCalculator({ selectedPlayer, onUpdate, sx = {} }
                 setSelectedPlayer(null); // Allow closing for other reasons
             }}
             sx={{
-                // display: { xs: 'flex', md: 'none' },
                 margin: '0 auto !important',
             }}
         >

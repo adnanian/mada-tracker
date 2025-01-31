@@ -4,10 +4,10 @@ import { useContext } from 'react';
 import { MadaContext } from '../../context';
 
 /**
- * TODO
+ * Renders a simple button to open the NameForm.
  * 
- * @param {*} param0 
- * @returns 
+ * @param {object} props the component props 
+ * @returns the button used for opening the form.
  */
 export default function PlayerFormOpener({ onOpen }) {
     const { hideControls, rounds } = useContext(MadaContext);

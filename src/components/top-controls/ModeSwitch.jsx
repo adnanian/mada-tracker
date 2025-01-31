@@ -5,9 +5,10 @@ import { useContext } from 'react';
 import { MadaContext } from '../../context';
 
 /**
- * TODO
+ * Renders a set of toggles to toggle between game mode
+ * and hide other settings to make navigating the app easier.
  * 
- * @returns 
+ * @returns the toggle buttons to manage game modes and controls.
  */
 export default function ModeSwitch() {
 

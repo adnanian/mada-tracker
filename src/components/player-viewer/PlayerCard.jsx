@@ -1,6 +1,13 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { Card, Typography, TableContainer, Table, TableRow, TableCell, Box, TableBody, Tooltip } from "@mui/material";
+import Card from '@mui/material/Card';
+import Typography from '@mui/material/Typography';
+import TableContainer from '@mui/material/TableContainer';
+import Table from '@mui/material/Table';
+import TableRow from '@mui/material/TableRow';
+import TableCell from '@mui/material/TableCell';
+import Box from '@mui/material/Box';
+import TableBody from '@mui/material/TableBody';
+import Tooltip from '@mui/material/Tooltip';
 import WarningIcon from '@mui/icons-material/Warning';
 import CloseIcon from '@mui/icons-material/Close';
 import { MadaContext } from "../../context";
@@ -8,26 +15,32 @@ import { useContext } from "react";
 import { WINNING_SCORE } from "../../constants";
 
 /**
- * TODO
+ * Renders a selectable container displaying a player's information.
  * 
- * @param {*} param0 
- * @returns 
+ * @param {Event} props the component props. 
+ * @returns a container of the player's name, position, and score.
  */
-export default function PlayerCard({ player, isSelected, onSelect, onScoreUpdate }) {
+export default function PlayerCard({ player, isSelected, onSelect }) {
 
     const { isInRange, isCompetitionMode, isEliminated } = useContext(MadaContext);
 
     /**
-     * TODO
+     * Sets the new selected player upon clicking on the card.
      */
     function handleSelectedPlayer() {
         onSelect(player);
     }
 
     /**
-     * TODO
+     * Sets the appropriate background color of the player card, depending
+     * on the player's selection and elimination/suspension status.
      * 
-     * @returns 
+     * A non-selected active player card will be gray.
+     * A selected active player card will be yellow.
+     * A non-selected suspended/eliminated player card will be orange.
+     * A selected suspended/eliminated player card will be pink.
+     * 
+     * @returns the appropriate background color.
      */
     function backgroundColor() {
         if (player.score >= WINNING_SCORE) return '#0ff';
@@ -39,9 +52,13 @@ export default function PlayerCard({ player, isSelected, onSelect, onScoreUpdate
     }
 
     /**
-     * TODO
+     * Displays the appropriate icon next to the player's name, depending
+     * on whether or not the player is suspended or eliminated.
      * 
-     * @returns 
+     * A suspended player will have the warning icon displayed next to his/her name.
+     * An eliminated player will have the close icon displayed next to his/her name.
+     * 
+     * @returns the appropriate icon if applicable, null otherwise.
      */
     function iconDisplay() {
         if (!isInRange(player.position)) {
@@ -137,19 +154,6 @@ export default function PlayerCard({ player, isSelected, onSelect, onScoreUpdate
                     </TableBody>
                 </Table>
             </TableContainer>
-            {/* {isCompetitionMode ? (
-                <Button
-                    variant='contained'
-                    sx={{
-                        backgroundColor: '#0f0 !important',
-                        width: '100% !important',
-                        border: '1px solid black'
-                    }}
-                    onClick={onScoreUpdate}
-                >
-                    Update Score
-                </Button>
-            ) : null} */}
         </Box>
     );
 }

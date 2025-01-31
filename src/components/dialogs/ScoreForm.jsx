@@ -8,16 +8,17 @@ import { useState } from 'react';
 import { SCORE_CHANGE_MIN, SCORE_CHANGE_MAX } from '../../constants';
 
 /**
- * TODO
+ * Renders the modal for updating the turn player's score upon
+ * successfully kicking a player out of the range.
  * 
- * @param {*} param0 
- * @returns 
+ * @param {Event} props the component props.
+ * @returns the score form modal.
  */
 export default function ScoreForm({ open, onClose, onUpdate }) {
     const [score, setScore] = useState(0);
 
     /**
-     * TODO
+     * Updates the score and closes the modal.
      */
     function update() {
         // Ensure the score is within the allowed range before updating
@@ -47,11 +48,13 @@ export default function ScoreForm({ open, onClose, onUpdate }) {
                     onChange={(e) => setScore(e.target.value)}
                     label="Score"
                     type="number"
-                    inputProps={{
-                        min: SCORE_CHANGE_MIN,
-                        max: SCORE_CHANGE_MAX,
-                        step: 1,
-                        style: { textAlign: 'center' }, // Center-align text
+                    slotProps={{
+                        input: {
+                            min: SCORE_CHANGE_MIN,
+                            max: SCORE_CHANGE_MAX,
+                            step: 1,
+                            style: { textAlign: 'center' }, // Center-align text
+                        }
                     }}
                     sx={{
                         '& .MuiInputBase-input': {

@@ -6,9 +6,9 @@ import PlayerViewer from './components/player-viewer/PlayerViewer';
 import { MadaProvider } from './context.jsx'
 
 /**
- * TODO
+ * Parent component.
  * 
- * @returns 
+ * @returns app.
  */
 function App() {
 

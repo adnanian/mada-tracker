@@ -4,13 +4,15 @@ import { useCallback, useContext } from "react";
 import { MadaContext } from "../../context";
 
 /**
- * TODO
+ * Renders a slider for adjusting the number of players
+ * in the game.
  * 
- * @returns 
+ * @returns a slider to adjust the player count.
  */
 export default function PlayerSizeAdjustor() {
     const { playerSize, setPlayerSize, hideControls, rounds } = useContext(MadaContext);
 
+    // Each whole number from the min to max number of players will have its own mark.
     const marks = useCallback(() => {
         const playerMarks = [];
         for (let i = MIN_PLAYER_SIZE; i <= MAX_PLAYER_SIZE; i++) {

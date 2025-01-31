@@ -19,13 +19,14 @@ export default function TopControls() {
     const [triggerNamesAdjust, setTriggerNamesAdjust] = useState(false);
 
     /**
-     * TODO
+     * Begins a new game.
      * 
      * @param {*} e 
-     * @returns 
+     * @returns void if name validation fails.
      */
     function startGame(e) {
         e.preventDefault();
+        // First validates, that all name fields are entered and have unique entries.
         for (let i = 0; i < players.length; i++) {
             if (players[i].name.replace(' ', '') === '') {
                 alert('Names cannot be blank!');
@@ -38,7 +39,9 @@ export default function TopControls() {
                 }
             }
         }
+        // Next, closes the name form.
         setTriggerNamesAdjust(false);
+        // Finally, starts the first round with the first player as the turn player.
         setRounds(1);
         setTurnPlayer(players[0]);
     }
@@ -66,7 +69,6 @@ export default function TopControls() {
                 onClose={() => setTriggerNamesAdjust(false)}
                 onBegin={startGame}
             />
-
         </Box>
     );
 }

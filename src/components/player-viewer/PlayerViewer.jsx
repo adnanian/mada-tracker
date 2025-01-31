@@ -5,12 +5,13 @@ import { MadaContext } from '../../context';
 import PlayerCard from './PlayerCard';
 import PositionCalculator from '../dialogs/PositionCalculator';
 import ScoreForm from '../dialogs/ScoreForm';
-import RangeAdjustor from '../dialogs/RangeAdjustor';
+import RangeChanger from '../dialogs/RangeChanger';
 
 /**
- * TOOD
+ * Renders a grid-layout of all the players in the current game
+ * session.
  * 
- * @returns 
+ * @returns a list of all the players in the game session.
  */
 export default function PlayerViewer() {
 
@@ -24,16 +25,19 @@ export default function PlayerViewer() {
         turnPlayer,
         setTurnPlayer
     } = useContext(MadaContext);
+    // Modal opener for RangeChanger.
     const [triggerRangeChange, setTriggerRangeChange] = useState(false);
+    // Modal opener for ScoreForm.
     const [triggerScoreChange, setTriggerScoreChange] = useState(false);
 
     /**
-     * TODO
+     * Updates the currently selected player's position, and opens
+     * the RangeChanger modal if applicable.
      * 
-     * @param {*} newPosition 
-     * @param {*} openRangeAdjustor 
+     * @param {number} newPosition the selected player's new position.
+     * @param {boolean} openRangeChanger the new state value for triggerRangeChange.
      */
-    function updateSelectedPlayerPosition(newPosition, openRangeAdjustor) {
+    function updateSelectedPlayerPosition(newPosition, openRangeChanger) {
         const isOut = !isInRange(newPosition);
         const eliminatorId = isOut ? turnPlayer.number : 0;
         setPlayers(players.map((player) => {
@@ -52,21 +56,20 @@ export default function PlayerViewer() {
         if (selectedPlayer.number === turnPlayer.number) {
             setTurnPlayer({ ...turnPlayer, position: newPosition, eliminatorId: eliminatorId })
         }
-        setTriggerRangeChange(openRangeAdjustor);
+        setTriggerRangeChange(openRangeChanger);
         if (isOut) {
             setTriggerScoreChange(isCompetitionMode);
         }
     }
 
     /**
-     * TODO
+     * Updates the turn player's score upon submitting the score form.
      * 
-     * @param {*} points 
+     * @param {number} points the number of points to add to the turn player's score. 
      */
     function updateScore(points) {
         const newScore = (turnPlayer.number !== selectedPlayer.number) ? turnPlayer.score + points : turnPlayer.score - points;
         setPlayers(players.map((player) => {
-            // return player.number === turnPlayer.number ? { ...player, score: newScore } : player
             if (player.number === turnPlayer.number) {
                 let newSuspensionStreak = player.suspensionStreak;
                 if (turnPlayer.number === selectedPlayer.number && newScore === 0) {
@@ -132,9 +135,8 @@ export default function PlayerViewer() {
                 selectedPlayer={selectedPlayer}
                 onUpdate={updateSelectedPlayerPosition}
             />
-            <RangeAdjustor
+            <RangeChanger
                 open={triggerRangeChange}
-                // onClose={() => setTriggerRangeChange(false)}
                 onClose={(e, reason) => {
                     if (reason === 'backdropClick') {
                         return;
@@ -144,7 +146,6 @@ export default function PlayerViewer() {
             />
             <ScoreForm
                 open={triggerScoreChange}
-                // onClose={() => setTriggerScoreChange(false)}
                 onClose={(e, reason) => {
                     if (reason === 'backdropClick') {
                         return;
