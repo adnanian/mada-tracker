@@ -54,7 +54,7 @@ export default function PlayerSizeAdjustor() {
                 step={1}
                 valueLabelDisplay='auto'
                 sx={{ width: '90%' }}
-                disabled={rounds > 0}
+                disabled={rounds !== 0}
             />
         </Card>
     );

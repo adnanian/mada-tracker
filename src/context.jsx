@@ -107,42 +107,33 @@ const MadaProvider = ({ children }) => {
      * then he/she is eliminated from the game.
      */
     function suspensionUpdate() {
-        console.log(turnPlayer);
         if (isCompetitionMode) {
-            if (!isInRange(turnPlayer.position)) {
-                if (turnPlayer.score <= 0) {
-                    setPlayers(players.map((player) => player.number === turnPlayer.number ? { ...player, suspensionStreak: (player.suspensionStreak + 1) } : player));
-                } else {
-                    setPlayers(players.map((player) => {
-                        if (player.number === turnPlayer.eliminatorId) {
-                            if (player.number !== turnPlayer.number) {
-                                const newScore = player.score + turnPlayer.score;
-                                return { ...player, score: newScore }
-                            } else {
-
-                                return {
-                                    ...player,
-                                    score: (turnPlayer.number !== turnPlayer.eliminatorId) ? 0 : turnPlayer.score
-                                }
+            setPlayers((oldPlayerInfo) => {
+                // Step 1: Retrieve old player data.
+                const newPlayerInfo = [...oldPlayerInfo]
+                // Step 2: Get turn player.
+                const tp = newPlayerInfo.find((player) => player.number === turnPlayer.number);
+                // Step 3: Get Eliminator (if it exists)
+                if (tp.eliminatorId > 0) {
+                    const eliminator = newPlayerInfo.find((player) => player.number === turnPlayer.eliminatorId);
+                    // Step 4: Update turn player and eliminator info accordingly.
+                    if (!isInRange(tp.position)) {
+                        if (tp.score > 0) {
+                            if (tp.number !== eliminator.number) {
+                                eliminator.score += tp.score;
                             }
+                            tp.score = 0;
                         } else {
-                            return player;
-                        }
-                    }))
-                }
-            } else {
-                setPlayers(players.map((player) => {
-                    if (player.number === turnPlayer.number) {
-                        return {
-                            ...player,
-                            suspensionStreak: 0,
-                            eliminatorId: 0
+                            tp.suspensionStreak += 1
                         }
                     } else {
-                        return player
+                        tp.suspensionStreak = 0;
+                        tp.eliminatorId = 0
                     }
-                }));
-            }
+                }
+                // Step 5: Return the new player data.
+                return newPlayerInfo;
+            });
         }
     }
 

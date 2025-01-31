@@ -123,14 +123,14 @@ export default function NameForm({ open, onClose, onBegin }) {
                     onClick={onBegin}
                     sx={{ width: '100%' }}
                 >
-                    Done!
+                    Start Game!
                 </Button>
                 <Button
                     variant='contained'
                     onClick={onClose}
                     sx={{ width: '100%', backgroundColor: 'red' }}
                 >
-                    Cancel
+                    Close
                 </Button>
             </Box>
         </Dialog>

@@ -21,7 +21,7 @@ export default function PlayerFormOpener({ onOpen }) {
             onClick={() => onOpen(true)}
             variant='contained'
             sx={{ marginTop: 2 }}
-            disabled={rounds > 0}
+            disabled={rounds !== 0}
         >
             New Players
         </Button>

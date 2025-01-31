@@ -16,7 +16,8 @@ export default function ModeSwitch() {
         isCompetitionMode,
         setIsCompetitionMode,
         hideControls,
-        setHideControls
+        setHideControls,
+        rounds
     } = useContext(MadaContext);
 
     return (
@@ -33,6 +34,7 @@ export default function ModeSwitch() {
                             <Switch
                                 checked={isCompetitionMode}
                                 onChange={(e) => setIsCompetitionMode(e.target.checked)}
+                                disabled={rounds !== 0}
                             />}
                         label={isCompetitionMode ? 'Competition Mode' : 'Elimination Mode'}
                     />
