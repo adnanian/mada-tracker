@@ -69,17 +69,43 @@ const MadaProvider = ({ children }) => {
     /**
      * Returns whether a player has been eliminated.
      * 
-     * A player is eliminated if his/her position has been moved outside the range in elimination mode.
-     * In competition mode, that player is suspended instead. Being "suspended" still 
+     * A player is eliminated if his/her position has been moved outside the
+     * range in elimination mode.
+     * In competition mode, that player is suspended instead. Being "suspended"
+     * stil gives the player an opportunity to get back in the game.
+     * 
+     * See suspensionUpdate() for more info.
      * 
      * 
      * @param {object} player the player. 
-     * @returns 
+     * @returns true if the player is eliminated, false otherwise.
      */
     function isEliminated(player) {
         return !(isInRange(player.position) || (isCompetitionMode && (player.score > 0 || player.suspensionStreak === 0)));
     }
 
+    /**
+     * Validate's the turn players status at the end of the turn.
+     * 
+     * The following scenarios apply only to competition mode:
+     * 
+     * If a player is active (i.e. within range), then ensures that
+     * suspensionStreak and eliminatorIds are reset. This is regardless
+     * of whether the play was active or suspended at the beginning of
+     * his/her turn.
+     * 
+     * If a player is suspended and fails to get back in the range at the end of
+     * his/her turn, then one of two things would happen:
+     * 
+     * 1. The player would have to give all his/her points to the player
+     * that eliminated him/her, and has one more chance to get back in
+     * at his/her next turn. This is the purpose of suspension streak.
+     * Any player with a suspension streak greater than 0 is eliminated.
+     * It increases for every turn that the player remains suspended.
+     * 
+     * 2. If the player is suspended and has a score less than or equal to 0,
+     * then he/she is eliminated from the game.
+     */
     function suspensionUpdate() {
         if (isCompetitionMode) {
             if (!isInRange(turnPlayer.position)) {
@@ -87,14 +113,6 @@ const MadaProvider = ({ children }) => {
                     setPlayers(players.map((player) => player.number === turnPlayer.number ? { ...player, suspensionStreak: (player.suspensionStreak + 1) } : player));
                 } else {
                     setPlayers(players.map((player) => {
-                        // if (player.number === turnPlayer.eliminatorId && player.number !== turnPlayer.number) {
-                        //     const newScore = player.score + turnPlayer.score;
-                        //     return { ...player, score: newScore }
-                        // } else if (player.number === turnPlayer.number) {
-                        //     return { ...player, score: 0 }
-                        // } else {
-                        //     return player;
-                        // }
                         if (player.number === turnPlayer.eliminatorId) {
                             if (player.number !== turnPlayer.number) {
                                 const newScore = player.score + turnPlayer.score;
