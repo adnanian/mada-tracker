@@ -107,6 +107,7 @@ const MadaProvider = ({ children }) => {
      * then he/she is eliminated from the game.
      */
     function suspensionUpdate() {
+        console.log(turnPlayer);
         if (isCompetitionMode) {
             if (!isInRange(turnPlayer.position)) {
                 if (turnPlayer.score <= 0) {
@@ -118,7 +119,11 @@ const MadaProvider = ({ children }) => {
                                 const newScore = player.score + turnPlayer.score;
                                 return { ...player, score: newScore }
                             } else {
-                                return { ...player, score: 0 }
+
+                                return {
+                                    ...player,
+                                    score: (turnPlayer.number !== turnPlayer.eliminatorId) ? 0 : turnPlayer.score
+                                }
                             }
                         } else {
                             return player;

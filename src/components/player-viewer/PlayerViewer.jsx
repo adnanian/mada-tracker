@@ -71,19 +71,20 @@ export default function PlayerViewer() {
         const newScore = (turnPlayer.number !== selectedPlayer.number) ? turnPlayer.score + points : turnPlayer.score - points;
         setPlayers(players.map((player) => {
             if (player.number === turnPlayer.number) {
-                let newSuspensionStreak = player.suspensionStreak;
-                if (turnPlayer.number === selectedPlayer.number && newScore === 0) {
-                    newSuspensionStreak += 1;
-                }
                 return {
                     ...player,
                     score: newScore,
-                    suspensionStreak: newSuspensionStreak
+                    // suspensionStreak: newSuspensionStreak
                 }
             } else {
                 return player;
             }
         }));
+        setTurnPlayer({
+            ...turnPlayer,
+            score: newScore,
+            // suspensionStreak: turnPlayerNewSuspensionStreak
+        });
         setSelectedPlayer(null);
         setTriggerScoreChange(false);
     }
